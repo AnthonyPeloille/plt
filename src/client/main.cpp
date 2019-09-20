@@ -18,8 +18,12 @@ int main(int argc,char* argv[])
 {
     Exemple exemple;
     exemple.setX(53);
-
-    cout << "It works !" << endl;
+    
+    if(argc > 1){
+        if(argv[1] == std::string("hello")){	
+            cout << "Bonjour le monde !" << endl;
+        }
+    }
 
     return 0;
 }
