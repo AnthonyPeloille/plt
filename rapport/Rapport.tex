@@ -1,7 +1,7 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage{times}
 \usepackage[francais]{babel}
-\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -60,16 +60,16 @@
 
 \begin{center}\textbf{\Huge Projet Logiciel Transversal}\end{center}{\Large \par}
 
-\begin{center}\textbf{\large Auteurs}\end{center}{\large \par}
+\begin{center}\textbf{\large Alexandre Génot - Anthony Peloille}\end{center}{\large \par}
 
 \vspace{2cm}
 
-%\begin{figure}[h]
-%\begin{center}
-%\includegraphics[width=\textwidth]{exemple.png}
-%\caption{\label{pacmangame}Exemple du jeu}
-%\end{center}
-%\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth]{slaythespire.jpg}
+\caption{\label{Slay the Spire}Slay the Spire}
+\end{center}
+\end{figure}
 
 \clearpage
 
@@ -84,84 +84,106 @@
 
 \subsection{Archétype}
 
+Les mécaniques du jeu s'inspirent de Slay the Spire (2017) qui est un rogue-like avec un système de combat basé sur l'utilisation de cartes.
 
 \subsection{Règles du jeu}
 
+Le joueur évolue dans un donjon dont la structure des étages est générée aléatoirement. A chaque étage il doit atteindre un boss, pour cela il se déplace de case en case à la manière d’un jeu de plateau. Chaque case contient un évènement (il y a différents types d’évènements : combat, magasin, récompense, bonus ou malus). Le but est de sortir du donjon en ayant complété chaque étage (avoir vaincu tous les boss). Le système de combat est basé sur l’utilisation de cartes permettant au joueur d’affronter ses adversaires (le nombre d’adversaires augmente au cours du jeu). Les cartes sont obtenues en récompenses de combat, au magasin ou lors d’évènements aléatoires. Le personnage peut trouver de l’équipement lui permettant d’augmenter ses statistiques (vie, armure, puissance).
+
 \subsection{Ressources}
 
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{dungeontile.png}
+\caption{\label{tiles}Tuiles du décor et personnages}
+\end{center}
+\end{figure}
 
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{card.png}
+\caption{\label{card}Template de carte utilisé lors des combats}
+\end{center}
+\end{figure}
 
-\clearpage
-\section{Description et conception des états}
-
-\subsection{Description des états}
-
-
-\subsection{Conception Logiciel}
-
-
-%\begin{landscape}
-%\begin{figure}[p]
-%\includegraphics[width=0.9\paperheight]{state.pdf}
-%\caption{\label{uml:state}Diagramme des classes d'état.} 
-%\end{figure}
-%\end{landscape}
-
-\clearpage
-\section{Rendu: Stratégie et Conception}
-
-\subsection{Stratégie de rendu d'un état}
-
-
-\subsection{Conception logiciel}
-
-%\begin{landscape}
-%\begin{figure}[p]
-%\includegraphics[width=0.9\paperheight]{render.pdf}
-%\caption{\label{uml:render}Diagramme des classes de rendu.} 
-%\end{figure}
-%\end{landscape}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{font.png}
+\caption{\label{font}Police de caractères}
+\end{center}
+\end{figure}
 
 \clearpage
-\section{Règles de changement d'états et moteur de jeu}
-
-\subsection{Règles}
-
-\clearpage
-\subsection{Conception logiciel}
-
-
-%\begin{landscape}
-%\begin{figure}[p]
-%\includegraphics[width=0.9\paperheight]{engine.pdf}
-%\caption{\label{uml:engine}Diagramme des classes de moteur de jeu.} 
-%\end{figure}
-%\end{landscape}
-
-
-\section{Intelligence Artificielle}
-
-\subsection{Stratégies}
-
-\clearpage
-\subsection{Conception logiciel}
-
-
-%\begin{landscape}
-%\begin{figure}[p]
-%\includegraphics[width=0.9\paperheight]{ai.pdf}
-%\caption{\label{uml:ai}Diagramme des classes d'intelligence artificielle.} 
-%\end{figure}
-%\end{landscape}
-
-
-\section{Modularisation}
-\label{sec:module}
-
-\subsection{Organisation des modules}
-
-\clearpage
-\subsection{Conception logiciel}
+%\section{Description et conception des états}
+%
+%\subsection{Description des états}
+%
+%
+%\subsection{Conception Logiciel}
+%
+%
+%%\begin{landscape}
+%%\begin{figure}[p]
+%%\includegraphics[width=0.9\paperheight]{state.pdf}
+%%\caption{\label{uml:state}Diagramme des classes d'état.} 
+%%\end{figure}
+%%\end{landscape}
+%
+%\clearpage
+%\section{Rendu: Stratégie et Conception}
+%
+%\subsection{Stratégie de rendu d'un état}
+%
+%
+%\subsection{Conception logiciel}
+%
+%%\begin{landscape}
+%%\begin{figure}[p]
+%%\includegraphics[width=0.9\paperheight]{render.pdf}
+%%\caption{\label{uml:render}Diagramme des classes de rendu.} 
+%%\end{figure}
+%%\end{landscape}
+%
+%\clearpage
+%\section{Règles de changement d'états et moteur de jeu}
+%
+%\subsection{Règles}
+%
+%\clearpage
+%\subsection{Conception logiciel}
+%
+%
+%%\begin{landscape}
+%%\begin{figure}[p]
+%%\includegraphics[width=0.9\paperheight]{engine.pdf}
+%%\caption{\label{uml:engine}Diagramme des classes de moteur de jeu.} 
+%%\end{figure}
+%%\end{landscape}
+%
+%
+%\section{Intelligence Artificielle}
+%
+%\subsection{Stratégies}
+%
+%\clearpage
+%\subsection{Conception logiciel}
+%
+%
+%%\begin{landscape}
+%%\begin{figure}[p]
+%%\includegraphics[width=0.9\paperheight]{ai.pdf}
+%%\caption{\label{uml:ai}Diagramme des classes d'intelligence artificielle.} 
+%%\end{figure}
+%%\end{landscape}
+%
+%
+%\section{Modularisation}
+%\label{sec:module}
+%
+%\subsection{Organisation des modules}
+%
+%\clearpage
+%\subsection{Conception logiciel}
 
 
 %
