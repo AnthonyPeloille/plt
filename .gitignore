@@ -1,6 +1,7 @@
 *~
 build
 bin
+cmake-build-debug
 nbproject
 src/*/*.h
 src/*/*/*.h
