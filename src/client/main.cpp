@@ -18,6 +18,8 @@ int main(int argc,char* argv[])
 {
     //Exemple exemple;
     //exemple.setX(53);
+    state::Door door {};
+    cout << door.getTypeId() << endl;
     
     if(argc > 1){
         if(argv[1] == std::string("hello")){	
