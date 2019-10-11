@@ -29,21 +29,29 @@ BOOST_AUTO_TEST_CASE(TestExemple)
   }
 }
 
-/*
+
 BOOST_AUTO_TEST_CASE(TestDoor)
 {
     {
         Door door {};
         BOOST_CHECK_EQUAL(door.getTypeId(), 5);
         BOOST_CHECK_EQUAL(door.isSpace(), false);
-    }
-
-    {
-        Door door {};
+        BOOST_CHECK_EQUAL(door.isStatic(), true);
         BOOST_CHECK_EQUAL(door.getStatusDoor(), false);
         door.setStatusDoor(true);
         BOOST_CHECK_EQUAL(door.getStatusDoor(), true);
     }
+
+    {
+        Door door {};
+        BOOST_CHECK_EQUAL(door.getX(), 0);
+        BOOST_CHECK_EQUAL(door.getY(), 0);
+        door.setX(23);
+        door.setY(32);
+        BOOST_CHECK_EQUAL(door.getX(), 23);
+        BOOST_CHECK_EQUAL(door.getY(), 32);
+    }
+
 }
 
 BOOST_AUTO_TEST_CASE(TestWall)
@@ -52,10 +60,22 @@ BOOST_AUTO_TEST_CASE(TestWall)
         Wall wall {TOPLEFT};
         BOOST_CHECK_EQUAL(wall.getTypeId(), 1);
         BOOST_CHECK_EQUAL(wall.isSpace(), false);
+        BOOST_CHECK_EQUAL(wall.isStatic(), true);
         BOOST_CHECK_EQUAL(wall.getWallTypeId(), 1);
         wall.setWallTypeId(TOPRIGHT);
         BOOST_CHECK_EQUAL(wall.getWallTypeId(), 2);
     }
+
+    {
+        Wall wall {BOTTOMLEFT};
+        BOOST_CHECK_EQUAL(wall.getX(), 0);
+        BOOST_CHECK_EQUAL(wall.getY(), 0);
+        wall.setX(34);
+        wall.setY(43);
+        BOOST_CHECK_EQUAL(wall.getX(), 34);
+        BOOST_CHECK_EQUAL(wall.getY(), 43);
+    }
+
 }
 
 BOOST_AUTO_TEST_CASE(TestSpace)
@@ -64,10 +84,22 @@ BOOST_AUTO_TEST_CASE(TestSpace)
         Space space {START};
         BOOST_CHECK_EQUAL(space.getTypeId(), 2);
         BOOST_CHECK_EQUAL(space.isSpace(), true);
+        BOOST_CHECK_EQUAL(space.isStatic(), true);
         BOOST_CHECK_EQUAL(space.getSpaceTypeId(), 2);
         space.setSpaceTypeId(END);
         BOOST_CHECK_EQUAL(space.getSpaceTypeId(), 3);
     }
+
+    {
+        Space space {EMPTY};
+        BOOST_CHECK_EQUAL(space.getX(), 0);
+        BOOST_CHECK_EQUAL(space.getY(), 0);
+        space.setX(45);
+        space.setY(54);
+        BOOST_CHECK_EQUAL(space.getX(), 45);
+        BOOST_CHECK_EQUAL(space.getY(), 54);
+    }
+
 }
 
 BOOST_AUTO_TEST_CASE(TestChest)
@@ -76,6 +108,7 @@ BOOST_AUTO_TEST_CASE(TestChest)
         Chest chest {HealthPoints};
         BOOST_CHECK_EQUAL(chest.getTypeId(), 6);
         BOOST_CHECK_EQUAL(chest.isSpace(), false);
+        BOOST_CHECK_EQUAL(chest.isStatic(), true);
         BOOST_CHECK_EQUAL(chest.getChestContentId(), 1);
         chest.setChestContentId(PowerBoost);
         BOOST_CHECK_EQUAL(chest.getChestContentId(), 2);
@@ -106,9 +139,10 @@ BOOST_AUTO_TEST_CASE(TestMonster)
         Monster monster {GHOST};
         BOOST_CHECK_EQUAL(monster.getTypeId(), 4);
         BOOST_CHECK_EQUAL(monster.isMC(), false);
-        BOOST_CHECK_EQUAL(monster.getMonsterStatus(), 1);
+        BOOST_CHECK_EQUAL(monster.isStatic(), false);
+        BOOST_CHECK_EQUAL(monster.getStatus(), 1);
         monster.setStatus(DEAD);
-        BOOST_CHECK_EQUAL(monster.getMonsterStatus(), 2);
+        BOOST_CHECK_EQUAL(monster.getStatus(), 2);
         BOOST_CHECK_EQUAL(monster.getMonsterTypeId(), 1);
         monster.setMonsterTypeId(BOSS);
         BOOST_CHECK_EQUAL(monster.getMonsterTypeId(), 2);
@@ -138,6 +172,16 @@ BOOST_AUTO_TEST_CASE(TestMonster)
         BOOST_CHECK_EQUAL(monster.getPosition(),10);
         BOOST_CHECK_EQUAL(monster.getSpeed(),50);
     }
+
+    {
+        Monster monster {GHOST};
+        BOOST_CHECK_EQUAL(monster.getX(),0);
+        BOOST_CHECK_EQUAL(monster.getY(),0);
+        monster.setX(1);
+        monster.setY(11);
+        BOOST_CHECK_EQUAL(monster.getX(),1);
+        BOOST_CHECK_EQUAL(monster.getY(),11);
+    }
 }
 
 BOOST_AUTO_TEST_CASE(TestMainCharacter)
@@ -146,9 +190,10 @@ BOOST_AUTO_TEST_CASE(TestMainCharacter)
         MainCharacter link {};
         BOOST_CHECK_EQUAL(link.getTypeId(), 3);
         BOOST_CHECK_EQUAL(link.isMC(), true);
-        BOOST_CHECK_EQUAL(link.getMCStatus(), 1);
+        BOOST_CHECK_EQUAL(link.isStatic(), false);
+        BOOST_CHECK_EQUAL(link.getStatus(), 1);
         link.setStatus(MC_DEAD);
-        BOOST_CHECK_EQUAL(link.getMCStatus(), 2);
+        BOOST_CHECK_EQUAL(link.getStatus(), 2);
     }
 
     {
@@ -169,13 +214,24 @@ BOOST_AUTO_TEST_CASE(TestMainCharacter)
     }
 
     {
-        Monster monster {GHOST};
-        monster.setPosition(10);
-        monster.setSpeed(50);
-        BOOST_CHECK_EQUAL(monster.getPosition(),10);
-        BOOST_CHECK_EQUAL(monster.getSpeed(),50);
+        MainCharacter link {};
+        link.setPosition(20);
+        link.setSpeed(30);
+        BOOST_CHECK_EQUAL(link.getPosition(),20);
+        BOOST_CHECK_EQUAL(link.getSpeed(),30);
     }
+
+    {
+        MainCharacter link {};
+        BOOST_CHECK_EQUAL(link.getX(),0);
+        BOOST_CHECK_EQUAL(link.getY(),0);
+        link.setX(2);
+        link.setY(22);
+        BOOST_CHECK_EQUAL(link.getX(),2);
+        BOOST_CHECK_EQUAL(link.getY(),22);
+    }
+
 }
-*/
+
 
 /* vim: set sw=2 sts=2 et : */

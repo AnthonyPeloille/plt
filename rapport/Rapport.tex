@@ -145,11 +145,34 @@ Cases "Coffre" (Chest) : Ce dernier type de case correspond à des cases qui per
 
 \subsubsection{État éléments mobiles}
 
-Les éléments mobiles ont 3 caractéristiques, une direction (aucune, nord, est, sud, ouest), une vitesse et une position.
+Les éléments mobiles ont 3 caractéristiques, une direction (les 4 points cardinaux et une direction nulle), une vitesse et une position.
+Lorsque la position est à 0 alors l'élément est exactement sur la case, sinon il se trouve entre sa case originale et la case qui correspond à sa direction, quand la position à la même valeur que la vitesse, le personnage se déplace dans la direction correspondante.
 
-%\subsection{Conception Logiciel}
-%
-%
+Nous avons défini 2 éléments mobiles que sont les ennemis (2 types pour le moment : Ghost, l'ennemi basique et Boss, l'ennemi plus puissant qui permet d'accéder à l'étage suivant) et le personnage principal (MainCharacter) qui n'est autre que le personnage contrôlé par le joueur.
+Ces éléments mobiles ne disposent chacun que de 2 états : Alive et Dead, ils démarrent dans l'état Alive et passent à l'état Dead si leurs points de vie atteignent 0, pour les ennemis, ils disparaissent du jeu et pour le joueur, cela signifie la fin de la partie (donc le retour au 1er étage).
+Comme détaillé dans la partie règle du jeu, ces éléments disposent de 3 caractéristiques sui déterminent leur puissance de combat (HealthPoints, Attack et Defense).
+
+\subsubsection{État général}
+
+On rajoute enfin 2 éléments généraux à ceux définis auparavant, il s'agit des variables epoch et epochRate.
+La première sert simplement à connaître le nombre de "tour" depuis le début de la partie. 
+La seconde permet de régler la vitesse du jeu en réglant le nombre d'époque par seconde.
+
+\subsection{Conception Logiciel}
+
+On peut voir notre diagramme des classes sur la page suivante (Figure x), on y retrouve donc toutes les classes mentionnées auparavant qui permettent de définir un état du jeu :
+- MobileElement qui permet de définir des éléments mobiles et dont descendent les classes Monstre (ennemis) et MainCharacter (personnage jouable).
+- StaticElement qui à le même rôle pour les éléments statiques qu'on retrouvera dans les étages de notre donjon : murs, portes, coffres ou espaces vides permettant aux personnages de se déplacer.
+- State qui gère la vitesse du jeu et le nombre de tours effectués.
+- Il y aussi de nombreuses classes dédiées à l'énumération de statuts ou de types.
+
+Il reste donc 2 classes : 
+
+Classe Element : Cette classe permet de définir chacun des éléments du jeu, qu'ils soient statiques ou mobiles. Ses seules caractéristiques sont des coordonnées (notés x et y) pour connaître la position de l'élément.
+
+Classe ElementTab :  Comme son nom le laisse entendre, on a ici, un conteneur d'éléments qui n'est autre qu'un tableau en deux dimensions. Celui-ci contient donc l'intégralité des éléments dispersés sur un étage du donjon.
+A noter que le conteneur principal est la classe State qui contient la totalité des données liées à un état donné.
+
 %%\begin{landscape}
 %%\begin{figure}[p]
 %%\includegraphics[width=0.9\paperheight]{state.pdf}
