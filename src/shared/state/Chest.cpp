@@ -6,7 +6,7 @@ state::Chest::Chest(ChestContentId id) {
 }
 
 bool const state::Chest::isSpace() {
-    return 0;
+    return false;
 }
 
 const state::TypeId state::Chest::getTypeId() {

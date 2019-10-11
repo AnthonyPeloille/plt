@@ -85,11 +85,16 @@
 
 \subsection{Archétype}
 
-Les mécaniques du jeu s'inspirent de Slay the Spire (2017) qui est un rogue-like avec un système de combat basé sur l'utilisation de cartes.
+Les mécaniques du jeu s'inspirent de The Legend of Zelda (1986) qui est un jeu de type action/aventure.
 
 \subsection{Règles du jeu}
 
-Le joueur évolue dans un donjon dont la structure des étages est générée aléatoirement. A chaque étage il doit atteindre un boss, pour cela il se déplace de case en case à la manière d’un jeu de plateau. Chaque case contient un évènement (il y a différents types d’évènements : combat, magasin, récompense, bonus ou malus). Le but est de sortir du donjon en ayant complété chaque étage (avoir vaincu tous les boss). Le système de combat est basé sur l’utilisation de cartes permettant au joueur d’affronter ses adversaires (le nombre d’adversaires augmente au cours du jeu). Les cartes sont obtenues en récompenses de combat, au magasin ou lors d’évènements aléatoires. Le personnage peut trouver de l’équipement lui permettant d’augmenter ses statistiques (vie, armure, puissance).
+Le joueur évolue dans un donjon dont la structure des étages est générée aléatoirement. A chaque étage il doit atteindre un boss, pour cela il se déplace de case en case à la manière d’un jeu de plateau. Les cases peuvent contenir différents types d'évènements : combat, récompense, bonus, malus.... Le but est de sortir du donjon en ayant complété chaque étage, c'est-à-dire avoir vaincu chacun des boss. 
+Les phases de combats se déroulent se forme de combats tour par tour, à chaque tour le personnage peut attaquer (différents coups d'épée) puis le tour suivant, l'ennemi attaque. Chaque personnage (personnage principal ou ennemi) dispose de 3 caractéristiques :
+- Les points de vie/Health Points, lorsque ceux-ci arrivent à 0 le personnage meurt. 
+- L'attaque , conditionne les dégâts qu'inflige un coup.
+- La défense, détermine la quantité de point de vie perdue après avoir reçu une attaque.
+Le système de combat est basé sur l’utilisation de cartes permettant au joueur d’affronter ses adversaires (le nombre d’adversaires augmente au cours du jeu). Les cartes sont obtenues en récompenses de combat, au magasin ou lors d’évènements aléatoires. Le personnage peut trouver de l’équipement lui permettant d’augmenter ses statistiques (vie, armure, puissance).
 
 \subsection{Ressources}
 
@@ -115,11 +120,33 @@ Le joueur évolue dans un donjon dont la structure des étages est générée al
 \end{figure}
 
 \clearpage
-%\section{Description et conception des états}
-%
-%\subsection{Description des états}
-%
-%
+\section{Description et conception des états}
+
+\subsection{Description des états}
+
+Pour chacun des états du jeu, on retrouve une combinaison d'éléments fixes (la structure du labyrinthe) et d'éléments mobiles (personnage principal et ennemis).
+Pour chaque élément, on comptera 2 propriétés que sont sa position et son identifiant (un id pour les murs, un pour les ennemis, le personnage principal ...).
+
+\subsubsection{État éléments fixes}
+
+Chaque étage du donjon possède un certain nombre fixe de cases. Toutes les cases ont un type parmi ces 4 : Mur, Espace (vide), Porte, Coffre.
+
+Cases "Mur" (Wall) : Elles servent à délimiter les contours de chaque étage du donjon, les personnages ne pouvant pas les traverser.
+
+Cases "Espace" (Space) : Il s'agit des cases sur lesquelles peuvent se déplacer librement les éléments mobiles, on trouve plusieurs sous-types de cases Espace :
+- Une case de départ où apparaît le joueur.
+- Une case de fin qui permet au joueur de passer à l'étage suivant (située après le boss de l'étage).
+- Plusieurs cases "spawn" où apparaissent les ennemis.
+- Des cases vides de tout élément.
+
+Cases "Porte" (Door) : Ce sont des cases infranchissables par le joueur sauf si le joueur remplit les conditions requises (avoir tué un certain ennemi, avoir obtenu une clé ...), la case devient alors franchissable et donne accès à une nouvelle zone.
+
+Cases "Coffre" (Chest) : Ce dernier type de case correspond à des cases qui permettent au joueur d'obtenir des éléments lui permettant de booster ses statistiques (Vitalité, Attaque ou Défense).
+
+\subsubsection{État éléments mobiles}
+
+Les éléments mobiles ont 3 caractéristiques, une direction (aucune, nord, est, sud, ouest), une vitesse et une position.
+
 %\subsection{Conception Logiciel}
 %
 %
