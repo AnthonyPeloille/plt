@@ -2,7 +2,12 @@
 #include "ElementTab.h"
 
 state::ElementTab::ElementTab(size_t width, size_t height) {
-
+    element_list.resize(width);
+    for (auto &h_list : element_list){
+        h_list.reserve(height);
+    }
+    this->width = width;
+    this->height = height;
 }
 
 const size_t state::ElementTab::getWidth() {
@@ -13,20 +18,25 @@ const size_t state::ElementTab::getHeight() {
     return height;
 }
 
-size_t state::ElementTab::add(Element *e) {
+/*size_t state::ElementTab::add(Element *e) {
     return 0;
-}
+}*/
 
 void state::ElementTab::resize(size_t width, size_t height) {
-
+    this->width = width;
+    this->height = height;
+    element_list.resize(width);
+    for (auto &h_list : element_list){
+        h_list.reserve(height);
+    }
 }
 
 state::Element *const state::ElementTab::get(int i, int j) {
-    return nullptr;
+    return element_list[i][j].get();
 }
 
 void state::ElementTab::set(int i, int j, Element *e) {
-
+    element_list[i][j].reset(e);
 }
 
 /*
