@@ -7,6 +7,10 @@ state::Wall::Wall(WallTypeId id) {
     wallTypeId = id;
 }
 
+state::Element* state::Wall::clone() {
+    return new state::Wall(*this);
+}
+
 bool const state::Wall::isSpace() {
     return false;
 }

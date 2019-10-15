@@ -233,5 +233,28 @@ BOOST_AUTO_TEST_CASE(TestMainCharacter)
 
 }
 
+BOOST_AUTO_TEST_CASE(TestElementTab)
+{
 
+    {
+        ElementTab grid {};
+        BOOST_CHECK_EQUAL(grid.getHeight(),1);
+        BOOST_CHECK_EQUAL(grid.getWidth(),0);
+        grid.resize(10,8);
+        BOOST_CHECK_EQUAL(grid.getHeight(),8);
+        BOOST_CHECK_EQUAL(grid.getWidth(),10);
+    }
+
+    {
+        ElementTab grid {};
+        grid.resize(10,8);
+        MainCharacter link {};
+        link.setAttack(120);
+        link.setDefense(150);
+        link.setHealthPoints(70);
+        grid.set(4,4,&link);
+        BOOST_CHECK_EQUAL(grid.get(4,4)->getTypeId(),link.getTypeId());
+    }
+
+}
 /* vim: set sw=2 sts=2 et : */
