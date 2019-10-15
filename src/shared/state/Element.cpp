@@ -13,10 +13,6 @@ const state::TypeId state::Element::getTypeId() {
     return this->typeId;
 }
 
-bool const state::Element::equals(const Element &other) {
-    return 0;
-}
-
 int state::Element::getX() const {
     return x;
 }

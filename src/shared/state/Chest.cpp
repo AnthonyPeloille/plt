@@ -17,10 +17,6 @@ const state::TypeId state::Chest::getTypeId() {
     return Element::getTypeId();
 }
 
-bool const state::Chest::equals(const Element &other) {
-    return Element::equals(other);
-}
-
 bool state::Chest::isOpened() {
     return this->statusChest;
 }

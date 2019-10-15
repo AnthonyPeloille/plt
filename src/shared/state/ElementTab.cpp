@@ -18,10 +18,6 @@ const size_t state::ElementTab::getHeight() {
     return height;
 }
 
-/*size_t state::ElementTab::add(Element *e) {
-    return 0;
-}*/
-
 void state::ElementTab::resize(size_t width, size_t height) {
     this->width = width;
     this->height = height;

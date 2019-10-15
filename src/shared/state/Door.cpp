@@ -12,10 +12,6 @@ const state::TypeId state::Door::getTypeId() {
     return Element::getTypeId();
 }
 
-bool const state::Door::equals(const Element &other) {
-    return Element::equals(other);
-}
-
 bool const state::Door::isSpace() {
     return false;
 }

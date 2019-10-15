@@ -19,10 +19,6 @@ const state::TypeId state::Space::getTypeId() {
     return Element::getTypeId();
 }
 
-bool const state::Space::equals(const Element &other) {
-    return Element::equals(other);
-}
-
 const state::SpaceTypeId state::Space::getSpaceTypeId() {
     return spaceTypeId;
 }

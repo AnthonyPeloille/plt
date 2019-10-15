@@ -6,10 +6,6 @@ state::MobileElement::MobileElement() {
     direction = NONE;
 }
 
-bool const state::MobileElement::equals(const Element &other) {
-    return Element::equals(other);
-}
-
 bool const state::MobileElement::isStatic() {
     return false;
 }

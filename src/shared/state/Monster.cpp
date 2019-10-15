@@ -20,10 +20,6 @@ const state::TypeId state::Monster::getTypeId() {
     return Element::getTypeId();
 }
 
-bool const state::Monster::equals(const Element &other) {
-    return MobileElement::equals(other);
-}
-
 state::MonsterTypeId state::Monster::getMonsterTypeId() const {
     return monsterTypeId;
 }

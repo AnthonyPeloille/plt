@@ -19,10 +19,6 @@ const state::TypeId state::Wall::getTypeId() {
     return Element::getTypeId();
 }
 
-bool const state::Wall::equals(const Element &other) {
-    return Element::equals(other);
-}
-
 state::WallTypeId state::Wall::getWallTypeId() const {
     return wallTypeId;
 }

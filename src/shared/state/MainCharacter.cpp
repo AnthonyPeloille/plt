@@ -19,10 +19,6 @@ const state::TypeId state::MainCharacter::getTypeId() {
     return Element::getTypeId();
 }
 
-bool const state::MainCharacter::equals(const Element &other) {
-    return MobileElement::equals(other);
-}
-
 state::McStatus state::MainCharacter::getStatus() const {
     return Status;
 }
