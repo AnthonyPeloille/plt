@@ -8,6 +8,10 @@ state::Monster::Monster(MonsterTypeId id) {
     Status = ALIVE;
 }
 
+state::Element* state::Monster::clone() {
+    return new state::Monster(*this);
+}
+
 bool const state::Monster::isMC() {
     return false;
 }

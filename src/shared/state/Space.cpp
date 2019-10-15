@@ -7,6 +7,10 @@ state::Space::Space(SpaceTypeId id) {
     spaceTypeId = id;
 }
 
+state::Element* state::Space::clone() {
+    return new state::Space(*this);
+}
+
 bool const state::Space::isSpace() {
     return true;
 }

@@ -4,6 +4,10 @@ state::Door::Door() {
     Element::setTypeId(state::DOOR);
 }
 
+state::Element* state::Door::clone() {
+    return new state::Door(*this);
+}
+
 const state::TypeId state::Door::getTypeId() {
     return Element::getTypeId();
 }

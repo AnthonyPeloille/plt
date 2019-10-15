@@ -5,6 +5,10 @@ state::Chest::Chest(ChestContentId id) {
     Element::setTypeId(state::CHEST);
 }
 
+state::Element* state::Chest::clone() {
+    return new state::Chest(*this);
+}
+
 bool const state::Chest::isSpace() {
     return false;
 }

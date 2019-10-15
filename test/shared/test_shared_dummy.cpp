@@ -253,8 +253,7 @@ BOOST_AUTO_TEST_CASE(TestElementTab)
         link.setDefense(150);
         link.setHealthPoints(70);
         grid.set(4,4,&link);
-        //BOOST_CHECK_EQUAL(grid.get(4,4)->getTypeId(),link.getTypeId());
-
+        BOOST_CHECK_EQUAL(grid.get(4,4)->getTypeId(),link.getTypeId());
     }
 
 }

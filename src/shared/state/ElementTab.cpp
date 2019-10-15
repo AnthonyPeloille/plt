@@ -36,7 +36,7 @@ state::Element *const state::ElementTab::get(int i, int j) {
 }
 
 void state::ElementTab::set(int i, int j, Element *e) {
-    element_list[i][j] = std::move(std::unique_ptr<Element> (e));
+    element_list[i][j].reset(e->clone());
 }
 
 /*

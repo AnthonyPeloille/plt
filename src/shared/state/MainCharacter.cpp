@@ -7,6 +7,10 @@ state::MainCharacter::MainCharacter() {
     Status = MC_ALIVE;
 }
 
+state::Element* state::MainCharacter::clone() {
+    return new state::MainCharacter(*this);
+}
+
 bool const state::MainCharacter::isMC() {
     return true;
 }
