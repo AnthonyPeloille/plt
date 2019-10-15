@@ -52,6 +52,11 @@ BOOST_AUTO_TEST_CASE(TestDoor)
         BOOST_CHECK_EQUAL(door.getY(), 32);
     }
 
+    {
+        Door door {};
+        BOOST_CHECK_EQUAL(door.isOpened(), false);
+    }
+
 }
 
 BOOST_AUTO_TEST_CASE(TestWall)
@@ -130,6 +135,13 @@ BOOST_AUTO_TEST_CASE(TestChest)
         chest.setY(23);
         BOOST_CHECK_LE(chest.getX(), 90); // Less than equal
         BOOST_CHECK_GT(chest.getY(), 11); // Greater than equal
+    }
+
+    {
+        Chest chest {HealthPoints};
+        BOOST_CHECK_EQUAL(chest.isOpened(), false);
+        chest.setStatusChest(true);
+        BOOST_CHECK_EQUAL(chest.getStatusChest(), true);
     }
 }
 
@@ -254,6 +266,23 @@ BOOST_AUTO_TEST_CASE(TestElementTab)
         link.setHealthPoints(70);
         grid.set(4,4,&link);
         BOOST_CHECK_EQUAL(grid.get(4,4)->getTypeId(),link.getTypeId());
+    }
+
+}
+
+BOOST_AUTO_TEST_CASE(TestState)
+{
+
+    {
+        State state1{};
+        state1.setEpoch(10);
+        BOOST_CHECK_EQUAL(state1.getEpoch(), 10);
+    }
+
+    {
+        State state1{};
+        state1.setEpochRate(50);
+        BOOST_CHECK_EQUAL(state1.getEpochRate(), 50);
     }
 
 }
