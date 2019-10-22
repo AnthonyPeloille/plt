@@ -27,7 +27,7 @@ void state::ElementTab::resize(size_t width, size_t height) {
     }
 }
 
-state::Element *const state::ElementTab::get(int i, int j) {
+state::Element *const state::ElementTab::get(int i, int j) const{
     return element_list[i][j].get();
 }
 

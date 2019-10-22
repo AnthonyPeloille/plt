@@ -11,7 +11,7 @@ render::CharsTileSet::CharsTileSet() {
     this->boss.push_back(*demon);
 }
 
-const render::Tile &render::CharsTileSet::getTile(const state::Element &e) {
+const render::Tile &render::CharsTileSet::getTile(int e) {
     return TileSet::getTile(e);
 }
 
