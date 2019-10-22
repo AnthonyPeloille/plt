@@ -26,3 +26,11 @@ void state::State::setEpochRate(int epochRate) {
     this->epochRate = epochRate;
 }
 
+const state::ElementTab &state::State::getGrid() const {
+    return grid;
+}
+
+const state::ElementTab &state::State::getChars() const {
+    return chars;
+}
+
