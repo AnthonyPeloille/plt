@@ -16,7 +16,9 @@ void testSFML() {
     sprite.setPosition(100, 25);
     //window.draw(sprite);
     auto* state = new state::State();
-    state->getGrid().resize(10,10);
+    std::string map = "../res/map.txt";
+    state->initGrid(map,10,10);
+    //state->getGrid().resize(10,10);
     auto* scene = new render::Scene(*state);
     while (window.isOpen())
     {
