@@ -2,17 +2,24 @@
 
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
 #include <SFML/Graphics.hpp>
+#include "render.h"
 
 void testSFML() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
     sf::Texture texture;
     texture.loadFromFile("../res/DungeonTiles/0x72_DungeonTilesetII_v1.3.png");
+    sf::RenderStates states;
     sf::Sprite sprite;
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(16, 16, 16, 16));
     //sprite.setColor(sf::Color(255, 255, 255, 200));
     sprite.setPosition(100, 25);
-    window.draw(sprite);
+    //window.draw(sprite);
+    auto* surface = new render::Surface();
+    surface->initQuads(4);
+    auto* grid = new render::GridTileSet();
+    auto* tile = new render::Tile(16, 16, 16, 16);
+    surface->setSprite(*tile);
     while (window.isOpen())
     {
         // Event processing
@@ -26,7 +33,9 @@ void testSFML() {
         // Clear the whole window before rendering a new frame
         window.clear();
         // Draw some graphical entities
-        window.draw(sprite);
+        window.draw(*surface);
+        //window.draw(sprite);
+        //surface->draw(window,states);
         // End the current frame and display its contents on screen
         window.display();
     }
