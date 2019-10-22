@@ -21,6 +21,7 @@ void testSFML() {
     auto* tile = new render::Tile(16, 16, 16, 16);
     surface->setSprite(*tile);
     auto* state = new state::State();
+    state->getGrid().resize(10,10);
     auto* scene = new render::Scene(*state);
     while (window.isOpen())
     {

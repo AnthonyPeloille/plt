@@ -10,11 +10,11 @@ state::ElementTab::ElementTab(size_t width, size_t height) {
     }
 }
 
-const size_t state::ElementTab::getWidth() {
+size_t state::ElementTab::getWidth() const{
     return width;
 }
 
-const size_t state::ElementTab::getHeight() {
+size_t state::ElementTab::getHeight() const{
     return height;
 }
 
