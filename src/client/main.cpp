@@ -34,8 +34,6 @@ void testSFML() {
         window.clear();
         // Draw some graphical entities
         window.draw(*surface);
-        //window.draw(sprite);
-        //surface->draw(window,states);
         // End the current frame and display its contents on screen
         window.display();
     }
