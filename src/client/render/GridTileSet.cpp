@@ -10,14 +10,6 @@ render::GridTileSet::GridTileSet() {
     this->walls.push_back(*wall_right);
 }
 
-int const render::GridTileSet::getCellWidth() {
-    return walls.at(0).getWidth();
-}
-
-int const render::GridTileSet::getCellHeight() {
-    return walls.at(0).getHeight();
-}
-
 const render::Tile &render::GridTileSet::getTile(const state::Element &e) {
     return TileSet::getTile(e);
 }

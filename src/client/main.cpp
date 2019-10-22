@@ -20,6 +20,8 @@ void testSFML() {
     auto* grid = new render::GridTileSet();
     auto* tile = new render::Tile(16, 16, 16, 16);
     surface->setSprite(*tile);
+    auto* state = new state::State();
+    auto* scene = new render::Scene(*state);
     while (window.isOpen())
     {
         // Event processing
@@ -33,7 +35,8 @@ void testSFML() {
         // Clear the whole window before rendering a new frame
         window.clear();
         // Draw some graphical entities
-        window.draw(*surface);
+        //window.draw(*surface);
+        scene->draw(window);
         // End the current frame and display its contents on screen
         window.display();
     }

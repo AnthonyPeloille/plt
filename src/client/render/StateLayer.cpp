@@ -9,3 +9,7 @@ render::StateLayer::StateLayer(const state::State &state):state(state){
 void render::StateLayer::initSurface() {
 
 }
+
+void render::StateLayer::stateChanged(const state::Event &e) {
+
+}
