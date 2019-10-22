@@ -15,11 +15,6 @@ void testSFML() {
     //sprite.setColor(sf::Color(255, 255, 255, 200));
     sprite.setPosition(100, 25);
     //window.draw(sprite);
-    auto* surface = new render::Surface();
-    surface->initQuads(4);
-    auto* grid = new render::GridTileSet();
-    auto* tile = new render::Tile(16, 16, 16, 16);
-    surface->setSprite(*tile);
     auto* state = new state::State();
     state->getGrid().resize(10,10);
     auto* scene = new render::Scene(*state);

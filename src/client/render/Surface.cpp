@@ -2,7 +2,7 @@
 #include "Surface.h"
 #include "Tile.h"
 
-render::Surface::Surface() {
+render::Surface::Surface(int width, int height) :width(width), height(height){
     this->texture.loadFromFile("../res/DungeonTiles/0x72_DungeonTilesetII_v1.3.png");
 }
 
@@ -12,7 +12,7 @@ void render::Surface::initQuads(int count) {
 }
 
 void render::Surface::setSprite(const Tile &tex, int i, int j) {
-    sf::Vertex* quad = &quads[0];
+    sf::Vertex* quad = &quads[(i*this->height+j)*4];
 
     quad[0].position = sf::Vector2f(tex.getHeight()*i,tex.getWidth()*j);
     quad[1].position = sf::Vector2f(tex.getHeight()*i,tex.getWidth()*j+tex.getY());
