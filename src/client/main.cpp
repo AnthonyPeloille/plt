@@ -5,7 +5,7 @@
 #include "render.h"
 
 void testSFML() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
+    sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML window");
     sf::Texture texture;
     texture.loadFromFile("../res/DungeonTiles/0x72_DungeonTilesetII_v1.3.png");
     sf::RenderStates states;
@@ -17,7 +17,9 @@ void testSFML() {
     //window.draw(sprite);
     auto* state = new state::State();
     std::string map = "../res/map.txt";
-    state->initGrid(map,10,10);
+    state->initFloor(map,80,45);
+    std::string wall = "../res/wall.txt";
+    state->initWall(wall,80,45);
     //state->getGrid().resize(10,10);
     auto* scene = new render::Scene(*state);
     while (window.isOpen())

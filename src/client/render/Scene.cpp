@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-render::Scene::Scene(const state::State &state) :state(state),stateLayer(this->state),gridLayer(this->state.getGrid()), charsLayer(this->state.getChars()) {
+render::Scene::Scene(const state::State &state) :state(state),stateLayer(this->state),floorLayer(this->state.getFloor()), wallLayer(this->state.getWall()), charsLayer(this->state.getChars()) {
 
 }
 
@@ -17,6 +17,8 @@ void render::Scene::stateChanged(const state::Event &event) {
 }
 
 void render::Scene::draw(sf::RenderWindow &window) {
-    this->gridLayer.initSurface();
-    window.draw(*this->gridLayer.getSurface());
+    this->floorLayer.initSurface();
+    this->wallLayer.initSurface();
+    window.draw(*this->floorLayer.getSurface());
+    window.draw(*this->wallLayer.getSurface());
 }
