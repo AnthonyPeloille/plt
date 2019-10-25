@@ -11,13 +11,13 @@ void render::Surface::initQuads(int count) {
     quads.resize(count);
 }
 
-void render::Surface::setSprite(const Tile &tex, int i, int j) {
+void render::Surface::setSprite(const Tile &tex, int j, int i) {
     sf::Vertex* quad = &quads[(i*this->height+j)*4];
 
     quad[0].position = sf::Vector2f(tex.getHeight()*i,tex.getWidth()*j);
-    quad[1].position = sf::Vector2f(tex.getHeight()*i,tex.getWidth()*j+tex.getY());
-    quad[2].position = sf::Vector2f(tex.getHeight()*i+tex.getX(),tex.getWidth()*j+tex.getY());
-    quad[3].position = sf::Vector2f(tex.getHeight()*i+tex.getX(),tex.getWidth()*j);
+    quad[1].position = sf::Vector2f(tex.getHeight()*i,tex.getWidth()*(j+1));
+    quad[2].position = sf::Vector2f(tex.getHeight()*(i+1),tex.getWidth()*(j+1));
+    quad[3].position = sf::Vector2f(tex.getHeight()*(i+1),tex.getWidth()*j);
 
     quad[0].texCoords = sf::Vector2f(tex.getX(),tex.getY());
     quad[1].texCoords = sf::Vector2f(tex.getX(),tex.getY()+tex.getWidth());

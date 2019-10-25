@@ -20,7 +20,6 @@ void render::ElementTabLayer::initSurface() {
     for(size_t i = 0; i < this->tab.getHeight(); i++){
         for(size_t j = 0; j < this->tab.getWidth(); j++) {
             //auto *tile = new render::Tile(16, 16, 16, 16);
-            int id = 0;
             std::stringstream tileId;
             state::TypeId tid;
             tid = this->tab.get(i,j)->getTypeId();
