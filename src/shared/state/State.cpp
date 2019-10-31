@@ -64,26 +64,27 @@ void state::State::initFloor(std::string map, int width, int height) {
     ids[13] = BOTTOMRIGHT;
     ids[14] = BOTTOMLEFT;
     ids[15] = HORI;
-    ids[16] = VERT;
-    ids[17] = TOP;
-    ids[18] = CORNERLEFT;
-    ids[19] = CORNERRIGHT;
-    ids[110] = CORNERFRONTLEFT;
-    ids[111] = CORNERFRONTRIGHT;
-    ids[112] = INNERCORNER_L_TL;
-    ids[113] = INNERCORNER_L_TR;
-    ids[114] = INNERCORNER_ML;
-    ids[115] = INNERCORNER_MR;
-    ids[116] = INNERCORNER_T_TL;
-    ids[117] = INNERCORNER_T_TR;
+    ids[16] = VERT_LEFT;
+    ids[17] = VERT_RIGHT;
+    ids[18] = TOP;
+    ids[19] = CORNERLEFT;
+    ids[110] = CORNERRIGHT;
+    ids[111] = CORNERFRONTLEFT;
+    ids[112] = CORNERFRONTRIGHT;
+    ids[113] = INNERCORNER_L_TL;
+    ids[114] = INNERCORNER_L_TR;
+    ids[115] = INNERCORNER_ML;
+    ids[116] = INNERCORNER_MR;
+    ids[117] = INNERCORNER_T_TL;
+    ids[118] = INNERCORNER_T_TR;
     ids[21] = EMPTY;
-    ids[41] = PowerBoost;
+    ids[62] = PowerBoost;
     std::map<int, std::string> type;
     type[0] = "Empty";
     type[1] = "Wall";
     type[2] = "Space";
     type[3] = "Door";
-    type[4] = "Chest";
+    type[6] = "Chest";
 
     if(file){
         while(getline(file,line)){
@@ -135,26 +136,27 @@ void state::State::initWall(std::string map, int width, int height) {
     ids[13] = BOTTOMRIGHT;
     ids[14] = BOTTOMLEFT;
     ids[15] = HORI;
-    ids[16] = VERT;
-    ids[17] = TOP;
-    ids[18] = CORNERLEFT;
-    ids[19] = CORNERRIGHT;
-    ids[110] = CORNERFRONTLEFT;
-    ids[111] = CORNERFRONTRIGHT;
-    ids[112] = INNERCORNER_L_TL;
-    ids[113] = INNERCORNER_L_TR;
-    ids[114] = INNERCORNER_ML;
-    ids[115] = INNERCORNER_MR;
-    ids[116] = INNERCORNER_T_TL;
-    ids[117] = INNERCORNER_T_TR;
+    ids[16] = VERT_LEFT;
+    ids[17] = VERT_RIGHT;
+    ids[18] = TOP;
+    ids[19] = CORNERLEFT;
+    ids[110] = CORNERRIGHT;
+    ids[111] = CORNERFRONTLEFT;
+    ids[112] = CORNERFRONTRIGHT;
+    ids[113] = INNERCORNER_L_TL;
+    ids[114] = INNERCORNER_L_TR;
+    ids[115] = INNERCORNER_ML;
+    ids[116] = INNERCORNER_MR;
+    ids[117] = INNERCORNER_T_TL;
+    ids[118] = INNERCORNER_T_TR;
     ids[21] = EMPTY;
-    ids[41] = PowerBoost;
+    ids[62] = PowerBoost;
     std::map<int, std::string> type;
     type[0] = "Empty";
     type[1] = "Wall";
     type[2] = "Space";
     type[3] = "Door";
-    type[4] = "Chest";
+    type[6] = "Chest";
 
     if(file){
         while(getline(file,line)){

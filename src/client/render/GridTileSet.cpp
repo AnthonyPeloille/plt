@@ -13,8 +13,10 @@ render::GridTileSet::GridTileSet() {
     this->walls.push_back(*wall_corner_bottom_left);
     Tile *wall_mid = new Tile(16, 0, 16, 16);
     this->walls.push_back(*wall_mid);
-    Tile *wall_side = new Tile(0, 128, 16, 16);
-    this->walls.push_back(*wall_side);
+    Tile *wall_side_right = new Tile(0, 128, 16, 16);
+    this->walls.push_back(*wall_side_right);
+    Tile *wall_side_left = new Tile(16, 128, 16, 16);
+    this->walls.push_back(*wall_side_left);
     Tile *wall_top = new Tile(16, 16, 16, 16);
     this->walls.push_back(*wall_top);
     Tile *wall_corner_left = new Tile(32, 128, 16, 16);
@@ -83,12 +85,14 @@ const render::Tile &render::GridTileSet::getTile(int id) {
         return this->walls.at(15);
     if (id==117)
         return this->walls.at(16);
+    if (id==118)
+        return this->walls.at(17);
     if (id==21)
         return this->spaces.at(0);
     if (id==22)
         return this->spaces.at(1);
     if (id==23)
         return this->spaces.at(2);
-    if (id==41)
+    if (id==62)
         return this->chests.at(0);
 }

@@ -7,6 +7,7 @@
 #include <state/Space.h>
 #include <state/Door.h>
 #include <state/Chest.h>
+#include <state/MainCharacter.h>
 #include "ElementTabLayer.h"
 #include "GridTileSet.h"
 
@@ -40,6 +41,10 @@ void render::ElementTabLayer::initSurface() {
                 } else if (tid == state::CHEST) {
                     state::Chest *e = dynamic_cast<state::Chest *>(this->tab.get(i, j));
                     tileId << tid << e->getChestContentId();
+                    this->surface->setSprite(this->tileset->getTile(std::stoi(tileId.str())), i, j);
+                }else if (tid == state::MC) {
+                    state::MainCharacter *e = dynamic_cast<state::MainCharacter *>(this->tab.get(i, j));
+                    tileId << tid;
                     this->surface->setSprite(this->tileset->getTile(std::stoi(tileId.str())), i, j);
                 } else {
                     this->surface->setSprite(empty,i,j);

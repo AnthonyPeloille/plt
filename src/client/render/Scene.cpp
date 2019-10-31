@@ -19,6 +19,8 @@ void render::Scene::stateChanged(const state::Event &event) {
 void render::Scene::draw(sf::RenderWindow &window) {
     this->floorLayer.initSurface();
     this->wallLayer.initSurface();
+    this->charsLayer.initSurface();
     window.draw(*this->floorLayer.getSurface());
     window.draw(*this->wallLayer.getSurface());
+    window.draw(*this->charsLayer.getSurface());
 }
