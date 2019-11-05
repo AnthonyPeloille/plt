@@ -49,7 +49,7 @@ void render::ElementTabLayer::initSurface() {
                     this->surface->setSprite(this->tileset->getTile(std::stoi(tileId.str())), i, j);
                 }else if (tid == state::MC) {
                     state::MainCharacter *e = dynamic_cast<state::MainCharacter *>(this->tab.get(i, j));
-                    tileId << tid;
+                    tileId << tid << 1;
                     this->surface->setSprite(this->tileset->getTile(std::stoi(tileId.str())), i, j);
                 } else {
                     this->surface->setSprite(empty,i,j);

@@ -4,6 +4,8 @@
 #include "Wall.h"
 #include "Door.h"
 #include "Chest.h"
+#include "MainCharacter.h"
+#include "Monster.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -192,8 +194,7 @@ void state::State::initWall(std::string map, int width, int height) {
 
 }
 
-/*
-void initChars (std::string map, int width, int height){
+void state::State::initChars (std::string map, int width, int height){
     this->chars.resize(width,height);
 
     std::ifstream file(map, ios::in);
@@ -204,11 +205,12 @@ void initChars (std::string map, int width, int height){
 
     std::map<int, int> ids;
     ids[00] = 0;
-    ids
+    ids[22] = START;
     std::map<int, std::string> type;
     type[0] = "Empty";
     type[1] = "Wall";
     type[2] = "Space";
+    type[3] = "MC";
     type[3] = "Door";
     type[6] = "Chest";
 
@@ -223,18 +225,9 @@ void initChars (std::string map, int width, int height){
                 }else{
                     id_type = ide/10;
                 }
-                if(type[id_type] == "Space"){
-                    Space e{(SpaceTypeId)ids[ide]};
-                    this->wall.set(i,j,&e);
-                }else if(type[id_type] == "Wall"){
-                    Wall e{(WallTypeId)ids[ide]};
-                    this->wall.set(i,j,&e);
-                }else if(type[id_type] == "Door"){
-                    Door e{};
-                    this->wall.set(i,j,&e);
-                }else if(type[id_type] == "Chest"){
-                    Chest e{(ChestContentId)ids[ide]};
-                    this->wall.set(i,j,&e);
+                if(ide==22) {
+                    MainCharacter e{};
+                    this->chars.set(i, j, &e);
                 }else{
 
                 }
@@ -245,4 +238,3 @@ void initChars (std::string map, int width, int height){
     }
 
 }
- */

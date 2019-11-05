@@ -20,6 +20,7 @@ void testSFML() {
     state->initFloor(map,80,45);
     std::string wall = "../res/wall.txt";
     state->initWall(wall,80,45);
+    state->initChars(wall,80,45);
     //state->getGrid().resize(10,10);
     auto* scene = new render::Scene(*state);
     while (window.isOpen())
