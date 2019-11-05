@@ -4,7 +4,7 @@
 #include "CharsTileSet.h"
 
 render::StateLayer::StateLayer(const state::State &state):state(state){
-    this->surface = std::unique_ptr<Surface>();
+    this->surface = std::unique_ptr<Surface>(new Surface(0,0));
     this->tileset = std::make_shared<CharsTileSet>();
     this->font.loadFromFile("../res/Font/ThickThinPixel.ttf");
 }
@@ -20,10 +20,8 @@ void render::StateLayer::initSurface() {
     title.setOrigin(0,0);
     title.setPosition(sf::Vector2f(160,16));
 
-    sf::Texture texture;
-    texture.loadFromFile("../res/DungeonTiles/0x72_DungeonTilesetII_v1.3.png");
     sf::Sprite heart1;
-    heart1.setTexture(texture);
+    heart1.setTexture(this->surface->getTexture());
     heart1.setTextureRect(sf::IntRect(288, 256, 16, 16));
     heart1.setOrigin(0,0);
     heart1.setPosition(sf::Vector2f(16,16));

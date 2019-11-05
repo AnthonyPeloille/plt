@@ -13,14 +13,6 @@
 
 using namespace std;
 
-state::ElementTab &state::State::getFloor() {
-    return floor;
-}
-
-state::ElementTab &state::State::getChars() {
-    return chars;
-}
-
 int state::State::getEpoch() const {
     return epoch;
 }
@@ -46,7 +38,7 @@ const state::ElementTab &state::State::getWall() const {
 }
 
 
-const state::ElementTab &state::State::getChars() const {
+const std::vector<std::shared_ptr<state::MobileElement>> &state::State::getChars() const {
     return chars;
 }
 
@@ -196,7 +188,6 @@ void state::State::initWall(std::string map, int width, int height) {
 }
 
 void state::State::initChars (std::string map, int width, int height){
-    this->chars.resize(width,height);
 
     std::ifstream file(map, ios::in);
     std::string id, line;
@@ -228,7 +219,7 @@ void state::State::initChars (std::string map, int width, int height){
                 }
                 if(ide==22) {
                     MainCharacter e{};
-                    this->chars.set(i, j, &e);
+                    this->chars.push_back(std::make_shared<MainCharacter>(e));
                 }else{
 
                 }

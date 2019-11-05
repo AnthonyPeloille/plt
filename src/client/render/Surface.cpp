@@ -33,3 +33,11 @@ void render::Surface::draw(sf::RenderTarget &target, sf::RenderStates states) co
     target.draw(quads,states);
 
 }
+
+const sf::Texture &render::Surface::getTexture() const {
+    return this->texture;
+}
+
+void render::Surface::setTexture(const sf::Texture &texture) {
+    this->texture = texture;
+}
