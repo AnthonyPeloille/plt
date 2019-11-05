@@ -8,8 +8,9 @@ void const state::Observable::registerObserver(Observer *o) {
 }
 
 void const state::Observable::notifyObserver(const Event &e) {
-    for (auto o : observer)
+    for (auto o : observer){
         o->stateChanged(e);
+    }
 }
 
 void const state::Observable::unregisterObserver(state::Observer *o) {

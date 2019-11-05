@@ -152,6 +152,7 @@ void state::State::initWall(std::string map, int width, int height) {
     ids[117] = INNERCORNER_T_TL;
     ids[118] = INNERCORNER_T_TR;
     ids[21] = EMPTY;
+    ids[22] = START;
     ids[62] = PowerBoost;
     std::map<int, std::string> type;
     type[0] = "Empty";
