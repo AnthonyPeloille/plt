@@ -18,9 +18,18 @@ void render::StateLayer::initSurface() {
 
     sf::FloatRect textRect = title.getLocalBounds();
     title.setOrigin(0,0);
-    title.setPosition(sf::Vector2f(16,16));
+    title.setPosition(sf::Vector2f(160,16));
+
+    sf::Texture texture;
+    texture.loadFromFile("../res/DungeonTiles/0x72_DungeonTilesetII_v1.3.png");
+    sf::Sprite heart1;
+    heart1.setTexture(texture);
+    heart1.setTextureRect(sf::IntRect(288, 256, 16, 16));
+    heart1.setOrigin(0,0);
+    heart1.setPosition(sf::Vector2f(16,16));
 
     this->menu.push_back(std::make_shared<sf::Text>(title));
+    this->menu.push_back(std::make_shared<sf::Sprite>(heart1));
 }
 
 void render::StateLayer::stateChanged(const state::Event &e) {
