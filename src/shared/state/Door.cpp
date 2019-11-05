@@ -12,10 +12,6 @@ const state::TypeId state::Door::getTypeId() {
     return Element::getTypeId();
 }
 
-bool const state::Door::isSpace() {
-    return false;
-}
-
 bool state::Door::isOpened() {
     return statusDoor;
 }

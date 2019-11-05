@@ -11,10 +11,6 @@ state::Element* state::Space::clone() {
     return new state::Space(*this);
 }
 
-bool const state::Space::isSpace() {
-    return true;
-}
-
 const state::TypeId state::Space::getTypeId() {
     return Element::getTypeId();
 }

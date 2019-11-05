@@ -5,15 +5,10 @@
 state::Monster::Monster(MonsterTypeId id) {
     Element::setTypeId(state::MONSTER);
     monsterTypeId = id;
-    Status = ALIVE;
 }
 
 state::Element* state::Monster::clone() {
     return new state::Monster(*this);
-}
-
-bool const state::Monster::isMC() {
-    return false;
 }
 
 const state::TypeId state::Monster::getTypeId() {
@@ -26,14 +21,6 @@ state::MonsterTypeId state::Monster::getMonsterTypeId() const {
 
 void state::Monster::setMonsterTypeId(MonsterTypeId monsterTypeId) {
     this->monsterTypeId = monsterTypeId;
-}
-
-state::MonsterStatus state::Monster::getStatus() const {
-    return Status;
-}
-
-void state::Monster::setStatus(MonsterStatus Status) {
-    this->Status = Status;
 }
 
 int state::Monster::getHealthPoints() const {

@@ -9,10 +9,6 @@ state::Element* state::Chest::clone() {
     return new state::Chest(*this);
 }
 
-bool const state::Chest::isSpace() {
-    return false;
-}
-
 const state::TypeId state::Chest::getTypeId() {
     return Element::getTypeId();
 }

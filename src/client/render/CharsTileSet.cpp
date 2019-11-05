@@ -12,6 +12,9 @@ render::CharsTileSet::CharsTileSet() {
 }
 
 const render::Tile &render::CharsTileSet::getTile(int e) {
-    return TileSet::getTile(e);
+    if (e == 31)
+        return this->main_character.at(0);
+    if (e == 41)
+        return this->ghost.at(0);
 }
 

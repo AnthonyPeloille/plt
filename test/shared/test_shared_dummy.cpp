@@ -15,7 +15,6 @@ BOOST_AUTO_TEST_CASE(TestDoor)
     {
         Door door {};
         BOOST_CHECK_EQUAL(door.getTypeId(), 5);
-        BOOST_CHECK_EQUAL(door.isSpace(), false);
         BOOST_CHECK_EQUAL(door.isStatic(), true);
         BOOST_CHECK_EQUAL(door.getStatusDoor(), false);
         door.setStatusDoor(true);
@@ -44,7 +43,6 @@ BOOST_AUTO_TEST_CASE(TestWall)
     {
         Wall wall {TOPLEFT};
         BOOST_CHECK_EQUAL(wall.getTypeId(), 1);
-        BOOST_CHECK_EQUAL(wall.isSpace(), false);
         BOOST_CHECK_EQUAL(wall.isStatic(), true);
         BOOST_CHECK_EQUAL(wall.getWallTypeId(), 1);
         wall.setWallTypeId(TOPRIGHT);
@@ -68,7 +66,6 @@ BOOST_AUTO_TEST_CASE(TestSpace)
     {
         Space space {START};
         BOOST_CHECK_EQUAL(space.getTypeId(), 2);
-        BOOST_CHECK_EQUAL(space.isSpace(), true);
         BOOST_CHECK_EQUAL(space.isStatic(), true);
         BOOST_CHECK_EQUAL(space.getSpaceTypeId(), 2);
         space.setSpaceTypeId(END);
@@ -92,7 +89,6 @@ BOOST_AUTO_TEST_CASE(TestChest)
     {
         Chest chest {HealthPoints};
         BOOST_CHECK_EQUAL(chest.getTypeId(), 6);
-        BOOST_CHECK_EQUAL(chest.isSpace(), false);
         BOOST_CHECK_EQUAL(chest.isStatic(), true);
         BOOST_CHECK_EQUAL(chest.getChestContentId(), 1);
         chest.setChestContentId(PowerBoost);
@@ -130,11 +126,7 @@ BOOST_AUTO_TEST_CASE(TestMonster)
     {
         Monster monster {GHOST};
         BOOST_CHECK_EQUAL(monster.getTypeId(), 4);
-        BOOST_CHECK_EQUAL(monster.isMC(), false);
         BOOST_CHECK_EQUAL(monster.isStatic(), false);
-        BOOST_CHECK_EQUAL(monster.getStatus(), 1);
-        monster.setStatus(DEAD);
-        BOOST_CHECK_EQUAL(monster.getStatus(), 2);
         BOOST_CHECK_EQUAL(monster.getMonsterTypeId(), 1);
         monster.setMonsterTypeId(BOSS);
         BOOST_CHECK_EQUAL(monster.getMonsterTypeId(), 2);
@@ -181,11 +173,7 @@ BOOST_AUTO_TEST_CASE(TestMainCharacter)
     {
         MainCharacter link {};
         BOOST_CHECK_EQUAL(link.getTypeId(), 3);
-        BOOST_CHECK_EQUAL(link.isMC(), true);
         BOOST_CHECK_EQUAL(link.isStatic(), false);
-        BOOST_CHECK_EQUAL(link.getStatus(), 1);
-        link.setStatus(MC_DEAD);
-        BOOST_CHECK_EQUAL(link.getStatus(), 2);
     }
 
     {
