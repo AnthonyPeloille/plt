@@ -20,7 +20,11 @@ void render::Scene::draw(sf::RenderWindow &window) {
     this->floorLayer.initSurface();
     this->wallLayer.initSurface();
     this->charsLayer.initSurface();
+    this->stateLayer.initSurface();
     window.draw(*this->floorLayer.getSurface());
     window.draw(*this->wallLayer.getSurface());
     window.draw(*this->charsLayer.getSurface());
+    for(auto drawable : this->stateLayer.getMenu()){
+        window.draw(*drawable);
+    }
 }

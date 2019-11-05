@@ -11,7 +11,7 @@ bool const state::MobileElement::isStatic() {
 }
 
 state::Direction state::MobileElement::getDirection() const {
-    return direction;
+    return this->direction;
 }
 
 void state::MobileElement::setDirection(Direction direction) {
@@ -19,18 +19,18 @@ void state::MobileElement::setDirection(Direction direction) {
 }
 
 int state::MobileElement::getSpeed() const {
-    return speed;
+    return this->speed;
 }
 
 void state::MobileElement::setSpeed(int speed) {
     this->speed = speed;
 }
 
-int state::MobileElement::getPosition() const {
-    return position;
+const state::Coords& state::MobileElement::getPosition() const {
+    return this->position;
 }
 
-void state::MobileElement::setPosition(int position) {
+void state::MobileElement::setPosition(const Coords& position) {
     this->position = position;
 }
 
