@@ -10,9 +10,14 @@
 #include <state/MainCharacter.h>
 #include "ElementTabLayer.h"
 #include "GridTileSet.h"
+#include "CharsTileSet.h"
 
-render::ElementTabLayer::ElementTabLayer(const state::ElementTab &tab):tab(tab) {
-    this->tileset = std::make_shared<GridTileSet>();
+render::ElementTabLayer::ElementTabLayer(const state::ElementTab &tab, int gridTileSet):tab(tab) {
+    if (gridTileSet == 1) {
+        this->tileset = std::make_shared<GridTileSet>();
+    }else{
+        this->tileset = std::make_shared<CharsTileSet>();
+    }
 }
 
 void render::ElementTabLayer::initSurface() {

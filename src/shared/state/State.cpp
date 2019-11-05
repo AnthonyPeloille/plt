@@ -191,3 +191,58 @@ void state::State::initWall(std::string map, int width, int height) {
     }
 
 }
+
+/*
+void initChars (std::string map, int width, int height){
+    this->chars.resize(width,height);
+
+    std::ifstream file(map, ios::in);
+    std::string id, line;
+    int i = 0;
+    int j = 0;
+    int ide = 0, id_type = 0;
+
+    std::map<int, int> ids;
+    ids[00] = 0;
+    ids
+    std::map<int, std::string> type;
+    type[0] = "Empty";
+    type[1] = "Wall";
+    type[2] = "Space";
+    type[3] = "Door";
+    type[6] = "Chest";
+
+    if(file){
+        while(getline(file,line)){
+            std::stringstream stream(line);
+            j = 0;
+            while(getline(stream,id,',')){
+                ide = std::stoi(id);
+                if(ide >= 100){
+                    id_type = ide/100;
+                }else{
+                    id_type = ide/10;
+                }
+                if(type[id_type] == "Space"){
+                    Space e{(SpaceTypeId)ids[ide]};
+                    this->wall.set(i,j,&e);
+                }else if(type[id_type] == "Wall"){
+                    Wall e{(WallTypeId)ids[ide]};
+                    this->wall.set(i,j,&e);
+                }else if(type[id_type] == "Door"){
+                    Door e{};
+                    this->wall.set(i,j,&e);
+                }else if(type[id_type] == "Chest"){
+                    Chest e{(ChestContentId)ids[ide]};
+                    this->wall.set(i,j,&e);
+                }else{
+
+                }
+                j++;
+            }
+            i++;
+        }
+    }
+
+}
+ */
