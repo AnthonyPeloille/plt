@@ -219,6 +219,7 @@ void state::State::initChars (std::string map, int width, int height){
                 }
                 if(ide==22) {
                     MainCharacter e{};
+                    e.setPosition(state::Coords(j,i));
                     this->chars.push_back(std::make_shared<MainCharacter>(e));
                 }else{
 

@@ -25,4 +25,7 @@ void render::Scene::draw(sf::RenderWindow &window) {
     for(auto drawable : this->stateLayer.getMenu()){
         window.draw(*drawable);
     }
+    for(auto drawable : this->stateLayer.getChars()){
+        window.draw(*drawable);
+    }
 }

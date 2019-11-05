@@ -3,7 +3,7 @@
 #include "CharsTileSet.h"
 
 render::CharsTileSet::CharsTileSet() {
-    Tile *knight = new Tile(128, 112, 16, 16);
+    Tile *knight = new Tile(128, 100, 16, 28);
     this->main_character.push_back(*knight);
     Tile *necromancer = new Tile(368, 268, 16, 20);
     this->ghost.push_back(*necromancer);
