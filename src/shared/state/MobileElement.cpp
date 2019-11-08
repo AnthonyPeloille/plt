@@ -14,7 +14,7 @@ state::Direction state::MobileElement::getDirection() const {
     return this->direction;
 }
 
-void state::MobileElement::setDirection(Direction direction) {
+void state::MobileElement::setDirection(state::Direction direction){
     this->direction = direction;
 }
 

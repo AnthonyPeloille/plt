@@ -3,6 +3,7 @@
 // Les lignes suivantes ne servent qu'à vérifier que la compilation avec SFML fonctionne
 #include <SFML/Graphics.hpp>
 #include "render.h"
+#include "engine.h"
 
 void testSFML() {
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML window");
@@ -15,14 +16,12 @@ void testSFML() {
     //sprite.setColor(sf::Color(255, 255, 255, 200));
     sprite.setPosition(100, 25);
     //window.draw(sprite);
-    auto* state = new state::State();
-    std::string map = "../res/map.txt";
-    state->initFloor(map,80,45);
-    std::string wall = "../res/wall.txt";
-    state->initWall(wall,80,45);
-    state->initChars(wall,80,45);
     //state->getGrid().resize(10,10);
-    auto* scene = new render::Scene(*state);
+    auto* engine = new engine::Engine();
+    auto* scene = new render::Scene(engine->getState());
+    engine::MoveCharCommand move(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()));
+    engine->addCommand(0,&move);
+    engine->update();
     while (window.isOpen())
     {
         // Event processing

@@ -31,8 +31,5 @@ void engine::Engine::update() {
     for(size_t i=0;i<currentCommands.size();i++){
         currentCommands[i]->execute(currentState);
     }
-    for(it=currentCommands.begin();it!=currentCommands.end();it++){
-        currentCommands.erase(it);
-    }
-    currentCommands.clear();
+    //currentCommands.clear();
 }
