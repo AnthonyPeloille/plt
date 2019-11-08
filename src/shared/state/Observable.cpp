@@ -3,17 +3,17 @@
 #include "Observable.h"
 #include <algorithm>
 
-void const state::Observable::registerObserver(Observer *o) {
+void state::Observable::registerObserver(Observer *o) const{
     this->observer.push_back(o);
 }
 
-void const state::Observable::notifyObserver(const Event &e) {
+void state::Observable::notifyObserver(const Event &e) const{
     for (auto o : observer){
         o->stateChanged(e);
     }
 }
 
-void const state::Observable::unregisterObserver(state::Observer *o) {
+void state::Observable::unregisterObserver(state::Observer *o) const{
     observer.erase(find(observer.cbegin(),observer.cend(),o));
 }
 

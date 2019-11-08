@@ -18,27 +18,47 @@ void testSFML() {
     //window.draw(sprite);
     //state->getGrid().resize(10,10);
     auto* engine = new engine::Engine();
-    auto* scene = new render::Scene(engine->getState());
-    engine::MoveCharCommand move(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()));
-    engine->addCommand(0,&move);
-    engine->update();
+    auto* scene = new render::Scene(engine->getState(),window);
+    auto* move = new engine::MoveCommand(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()));
+    engine->getState().getChars()[0]->setDirection(state::NORTH);
+    engine->addCommand(0,move);
+    bool start = true;
     while (window.isOpen())
     {
         // Event processing
         sf::Event event;
         while (window.pollEvent(event))
         {
-            // Request for closing the window
-            if (event.type == sf::Event::Closed)
-                window.close();
+            switch(event.type) {
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+
+                case sf::Event::KeyPressed:
+
+                    break;
+
+                case sf::Event::MouseButtonPressed:
+                    move = new engine::MoveCommand(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()));
+                    engine->getState().getChars()[0]->setDirection(state::NORTH);
+                    engine->addCommand(0,move);
+                    break;
+
+                default:
+                    break;
+            }
         }
         // Clear the whole window before rendering a new frame
         window.clear();
         // Draw some graphical entities
         //window.draw(*surface);
-        scene->draw(window);
+        if(start){
+            scene->draw();
+            start = false;
+        }
         // End the current frame and display its contents on screen
-        window.display();
+        sf::sleep(sf::milliseconds(1000));
+        engine->update();
     }
 }
 

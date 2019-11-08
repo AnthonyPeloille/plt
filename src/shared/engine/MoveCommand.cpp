@@ -1,16 +1,20 @@
 
-#include "MoveCharCommand.h"
+#include <state/StateEvent.h>
+#include "MoveCommand.h"
 #include "state/Direction.h"
 
-engine::MoveCharCommand::MoveCharCommand(state::MainCharacter* c) :character(c){
+engine::MoveCommand::~MoveCommand() {}
+
+engine::MoveCommand::MoveCommand(state::MainCharacter* c) : character(c){
 
 }
 
-engine::CommandTypeId engine::MoveCharCommand::getTypeId() const {
+engine::CommandTypeId engine::MoveCommand::getTypeId() const {
     return HANDLE_COLLISIONS;
 }
 
-void engine::MoveCharCommand::execute(state::State &state) {
+void engine::MoveCommand::execute(state::State &state) {
+    state::StateEvent event(state::MC_CHANGED);
     state::Coords pos = this->character->getPosition();
     switch(this->character->getDirection()){
         case state::NORTH:
@@ -29,4 +33,5 @@ void engine::MoveCharCommand::execute(state::State &state) {
             break;
     }
     this->character->setPosition(pos);
+    state.notifyObserver(event);
 }

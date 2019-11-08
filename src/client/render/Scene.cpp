@@ -1,7 +1,10 @@
 #include "Scene.h"
 
-render::Scene::Scene(const state::State &state) :state(state),stateLayer(this->state),floorLayer(this->state.getFloor(),1), wallLayer(this->state.getWall(),1){
-
+render::Scene::Scene(const state::State &state, sf::RenderWindow& window) :state(state),stateLayer(this->state),floorLayer(this->state.getFloor(),1), wallLayer(this->state.getWall(),1), window(window){
+    this->state.registerObserver(this);
+    this->floorLayer.initSurface();
+    this->wallLayer.initSurface();
+    this->stateLayer.initSurface();
 }
 
 const size_t render::Scene::getWidth() {
@@ -13,19 +16,17 @@ const size_t render::Scene::getHeight() {
 }
 
 void render::Scene::stateChanged(const state::Event &event) {
-
+    this->draw();
 }
 
-void render::Scene::draw(sf::RenderWindow &window) {
-    this->floorLayer.initSurface();
-    this->wallLayer.initSurface();
-    this->stateLayer.initSurface();
-    window.draw(*this->floorLayer.getSurface());
-    window.draw(*this->wallLayer.getSurface());
+void render::Scene::draw() {
+    this->window.draw(*this->floorLayer.getSurface());
+    this->window.draw(*this->wallLayer.getSurface());
     for(auto drawable : this->stateLayer.getMenu()){
-        window.draw(*drawable);
+        this->window.draw(*drawable);
     }
     for(auto drawable : this->stateLayer.getChars()){
-        window.draw(*drawable);
+        this->window.draw(*drawable);
     }
+    this->window.display();
 }

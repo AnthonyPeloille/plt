@@ -10,6 +10,7 @@ render::StateLayer::StateLayer(const state::State &state):state(state){
     this->surface = std::unique_ptr<Surface>(new Surface(0,0));
     this->tileset = std::make_shared<CharsTileSet>();
     this->font.loadFromFile("../res/Font/ThickThinPixel.ttf");
+    this->state.registerObserver(this);
 }
 
 void render::StateLayer::initSurface() {
@@ -49,7 +50,34 @@ void render::StateLayer::initSurface() {
 }
 
 void render::StateLayer::stateChanged(const state::Event &e) {
+    int type_id;
+    std::stringstream id;
 
+    sf::Text title;
+    title.setFont(this->font);
+    title.setString("TEST");
+    title.setCharacterSize(16);
+    title.setFillColor(sf::Color::White);
+
+    sf::FloatRect textRect = title.getLocalBounds();
+    title.setOrigin(0,0);
+    title.setPosition(sf::Vector2f(160,16));
+
+    sf::Sprite heart1;
+    heart1.setTexture(this->surface->getTexture());
+    heart1.setTextureRect(sf::IntRect(288, 256, 16, 16));
+    heart1.setOrigin(0,0);
+    heart1.setPosition(sf::Vector2f(16,16));
+
+    this->menu.push_back(std::make_shared<sf::Text>(title));
+    this->menu.push_back(std::make_shared<sf::Sprite>(heart1));
+    int i = 0;
+    for(auto chrs : this->state.getChars()){
+        id << chrs->getTypeId() << 1;
+        Tile mc_tile = this->tileset->getTile(std::stoi(id.str()));
+        dynamic_cast<sf::Sprite*>(this->chars[i].get())->setPosition(sf::Vector2f(16*chrs->getPosition().getX()-(mc_tile.getWidth()-16),16*chrs->getPosition().getY()-(mc_tile.getHeight()-8)));
+        i++;
+    }
 }
 
 const sf::Font &render::StateLayer::getFont() const {

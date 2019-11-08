@@ -21,15 +21,19 @@ void engine::Engine::addPassiveCommands() {
 }
 
 void engine::Engine::addCommand(int priority, Command *cmd) {
-    currentCommands[priority] = std::unique_ptr<Command>(cmd);
+    currentCommands[priority] = std::move(std::unique_ptr<Command>(cmd));
 }
 
 void engine::Engine::update() {
 
-    std::map<int, std::unique_ptr<Command>>::iterator it;
+    //std::map<int, std::unique_ptr<Command>>::iterator it;
 
+    for (auto it = currentCommands.begin(); it != currentCommands.end(); ++it) {
+        it->second->execute(currentState);
+    }
+    /*
     for(size_t i=0;i<currentCommands.size();i++){
         currentCommands[i]->execute(currentState);
-    }
-    //currentCommands.clear();
+    }*/
+    currentCommands.clear();
 }
