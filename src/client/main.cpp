@@ -19,10 +19,12 @@ void testSFML() {
     //state->getGrid().resize(10,10);
     auto* engine = new engine::Engine();
     auto* scene = new render::Scene(engine->getState(),window);
-    auto* move = new engine::MoveCommand(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()));
+    auto* pos = new state::Coords(0,20);
+    auto* move = new engine::MoveCommand(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()),pos);
     engine->getState().getChars()[0]->setDirection(state::NORTH);
     engine->addCommand(0,move);
     bool start = true;
+    sf::Vector2i position = sf::Mouse::getPosition();
     while (window.isOpen())
     {
         // Event processing
@@ -39,7 +41,10 @@ void testSFML() {
                     break;
 
                 case sf::Event::MouseButtonPressed:
-                    move = new engine::MoveCommand(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()));
+                    position = sf::Mouse::getPosition(window);
+                    pos->setX(position.x/16);
+                    pos->setY(position.y/16);
+                    move = new engine::MoveCommand(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()),pos);
                     engine->getState().getChars()[0]->setDirection(state::NORTH);
                     engine->addCommand(0,move);
                     break;
