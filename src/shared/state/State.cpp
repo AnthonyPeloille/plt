@@ -193,7 +193,7 @@ void state::State::initChars (std::string map, int width, int height){
     std::string id, line;
     int i = 0;
     int j = 0;
-    int ide = 0, id_type = 0;
+    int ide = 0;
 
     std::map<int, int> ids;
     ids[00] = 0;
@@ -213,9 +213,6 @@ void state::State::initChars (std::string map, int width, int height){
             while(getline(stream,id,',')){
                 ide = std::stoi(id);
                 if(ide >= 100){
-                    id_type = ide/100;
-                }else{
-                    id_type = ide/10;
                 }
                 if(ide==22) {
                     MainCharacter e{};
@@ -226,6 +223,9 @@ void state::State::initChars (std::string map, int width, int height){
                 }
                 if(ide==41) {
                     Monster m{state::GHOST};
+                    m.setAttack(1);
+                    m.setDefense(0);
+                    m.setHealthPoints(3);
                     m.setPosition(state::Coords(j,i));
                     this->monsters.push_back(std::make_shared<Monster>(m));
                 }else{
@@ -240,5 +240,9 @@ void state::State::initChars (std::string map, int width, int height){
 }
 
 const std::vector<std::shared_ptr<state::MobileElement>> &state::State::getMonsters() const {
+    return this->monsters;
+}
+
+std::vector<std::shared_ptr<state::MobileElement>> &state::State::getMonsters() {
     return this->monsters;
 }

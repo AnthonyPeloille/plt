@@ -19,7 +19,7 @@ void testSFML() {
     //state->getGrid().resize(10,10);
     auto* engine = new engine::Engine();
     auto* scene = new render::Scene(engine->getState(),window);
-    auto* pos = new state::Coords(0,20);
+    auto* pos = new state::Coords(10,20);
     auto* move = new engine::MoveCommand(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()),pos);
     engine->getState().getChars()[0]->setDirection(state::NORTH);
     engine->addCommand(1,move);
@@ -50,7 +50,6 @@ void testSFML() {
 
                 case sf::Event::MouseMoved:
                     //std::cout << engine->getState().getChars()[0]->getPosition().getX() << " - " << engine->getState().getChars()[0]->getPosition().getY() << std::endl;
-
                     break;
 
                 case sf::Event::MouseButtonPressed:
@@ -58,20 +57,23 @@ void testSFML() {
                     if(scene->getMoveBounds().contains(window.mapPixelToCoords(position))){
                         pos = new state::Coords(engine->getState().getChars()[0]->getPosition());
                         path = new engine::PathCommand(pos);
-                        engine->addCommand(0, path);
+                        engine->addCommand(2, path);
                         moving = true;
+                    }else if(scene->getAttackBounds().contains(window.mapPixelToCoords(position))) {
+                        attack = new engine::AttackCommand(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()));
+                        engine->addCommand(0,attack);
                     }else {
                         if(moving) {
-                            std::cout << window.getSize().x << '-' << scene->getWidth() << std::endl;
-                            std::cout << window.getSize().y << '-' << scene->getHeight() << std::endl;
-                            std::cout << position.x/16.f << std::endl;
-                            std::cout << (int) (position.y / (16*((float) window.getSize().y) / (float) scene->getHeight())) << std::endl;
-                            pos->setX((int) (position.x/16.f));
-                            pos->setY((int) (position.y/16.f));
+                            //std::cout << window.getSize().x << '-' << scene->getWidth() << std::endl;
+                            //std::cout << window.getSize().y << '-' << scene->getHeight() << std::endl;
+                            //std::cout << position.x/16.f << std::endl;
+                            //std::cout << (int) (position.y / (16*((float) window.getSize().y) / (float) scene->getHeight())) << std::endl;
+                            pos->setX((int) (position.x*1.f/16.f));
+                            pos->setY((int) (position.y*1.f/16.f));
                             move = new engine::MoveCommand(
                                     dynamic_cast<state::MainCharacter *>(engine->getState().getChars()[0].get()), pos);
                             engine->getState().getChars()[0]->setDirection(state::NORTH);
-                            engine->addCommand(0, move);
+                            engine->addCommand(1, move);
                             moving = false;
                         }
                     }

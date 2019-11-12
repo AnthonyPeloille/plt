@@ -13,7 +13,7 @@ engine::CommandTypeId engine::PathCommand::getTypeId() const {
 }
 
 void engine::PathCommand::execute(state::State &state) {
-    state::StateEvent event(state::MC_CHANGED);
+    state::StateEvent event(state::GRID_CHANGED);
     if(state.getWall().get(pos->getY()+1,pos->getX()) == NULL){
         dynamic_cast<state::Space *>(state.getFloor().get(pos->getY()+1,pos->getX()))->setColored(true);
     }

@@ -42,3 +42,10 @@ void state::MobileElement::setIsFighting(bool isFighting) {
     this->isFighting = isFighting;
 }
 
+void state::MobileElement::attack(state::MobileElement &target) {
+
+}
+
+void state::MobileElement::attacked(state::MobileElement &attacker) {
+
+}

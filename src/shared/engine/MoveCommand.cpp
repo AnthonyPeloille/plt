@@ -33,27 +33,36 @@ void engine::MoveCommand::execute(state::State &state) {
             break;
     }
     this->character->setPosition(pos);*/
-    state::StateEvent event(state::MC_CHANGED);
-    auto* old_pos = &this->character->getPosition();
-    if(state.getWall().get(old_pos->getY()+1,old_pos->getX()) == NULL){
-        dynamic_cast<state::Space *>(state.getFloor().get(old_pos->getY()+1,old_pos->getX()))->setColored(false);
-    }
-    if(state.getWall().get(old_pos->getY()-1,old_pos->getX()) == NULL){
-        dynamic_cast<state::Space *>(state.getFloor().get(old_pos->getY()-1,old_pos->getX()))->setColored(false);
-    }
-    if(state.getWall().get(old_pos->getY(),old_pos->getX()+1) == NULL){
-        dynamic_cast<state::Space *>(state.getFloor().get(old_pos->getY(),old_pos->getX()+1))->setColored(false);
-    }
-    if(state.getWall().get(old_pos->getY(),old_pos->getX()-1) == NULL){
-        dynamic_cast<state::Space *>(state.getFloor().get(old_pos->getY(),old_pos->getX()-1))->setColored(false);
-    }
-
-    if((this->pos->getY() == old_pos->getY()+1) || (this->pos->getY() == old_pos->getY()-1) || (this->pos->getY() == old_pos->getY())){
-        if((this->pos->getX() == old_pos->getX()+1) || (this->pos->getX() == old_pos->getX()-1) || (this->pos->getX() == old_pos->getX())){
-            if(state.getWall().get(this->pos->getY(),this->pos->getX()) == NULL){
-                this->character->setPosition(*this->pos);
+    if(!this->character->getIsFighting()){
+        state::StateEvent event(state::MC_CHANGED);
+        auto* old_pos = &this->character->getPosition();
+        if(state.getWall().get(old_pos->getY()+1,old_pos->getX()) == NULL){
+            dynamic_cast<state::Space *>(state.getFloor().get(old_pos->getY()+1,old_pos->getX()))->setColored(false);
+        }
+        if(state.getWall().get(old_pos->getY()-1,old_pos->getX()) == NULL){
+            dynamic_cast<state::Space *>(state.getFloor().get(old_pos->getY()-1,old_pos->getX()))->setColored(false);
+        }
+        if(state.getWall().get(old_pos->getY(),old_pos->getX()+1) == NULL){
+            dynamic_cast<state::Space *>(state.getFloor().get(old_pos->getY(),old_pos->getX()+1))->setColored(false);
+        }
+        if(state.getWall().get(old_pos->getY(),old_pos->getX()-1) == NULL){
+            dynamic_cast<state::Space *>(state.getFloor().get(old_pos->getY(),old_pos->getX()-1))->setColored(false);
+        }
+        //this->character->setPosition(*this->pos);
+        if((this->pos->getY() == old_pos->getY()+1) || (this->pos->getY() == old_pos->getY()-1) || (this->pos->getY() == old_pos->getY())){
+            if((this->pos->getX() == old_pos->getX()+1) || (this->pos->getX() == old_pos->getX()-1) || (this->pos->getX() == old_pos->getX())){
+                if(state.getWall().get(this->pos->getY(),this->pos->getX()) == NULL){
+                    this->character->setPosition(*this->pos);
+                    for(auto monster : state.getMonsters()) {
+                        //std::cout << (std::abs(monster->getPosition().getX() - this->character->getPosition().getX()) + std::abs(monster->getPosition().getY() - this->character->getPosition().getY())) <<std::endl;
+                        if ((std::abs(monster->getPosition().getX() - this->character->getPosition().getX()) +
+                             std::abs(monster->getPosition().getY() - this->character->getPosition().getY())) <= 1) {
+                            this->character->setIsFighting(true);
+                        }
+                    }
+                }
             }
         }
+        state.notifyObserver(event);
     }
-    state.notifyObserver(event);
 }

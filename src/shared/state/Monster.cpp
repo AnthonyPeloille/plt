@@ -1,6 +1,7 @@
 
 
 #include "Monster.h"
+#include "MainCharacter.h"
 
 state::Monster::Monster(MonsterTypeId id) {
     Element::setTypeId(state::MONSTER);
@@ -28,7 +29,11 @@ int state::Monster::getHealthPoints() const {
 }
 
 void state::Monster::setHealthPoints(int HealthPoints) {
-    this->HealthPoints = HealthPoints;
+    if(HealthPoints <= 0){
+        this->HealthPoints = 0;
+    }else {
+        this->HealthPoints = HealthPoints;
+    }
 }
 
 int state::Monster::getDefense() const {
@@ -45,5 +50,13 @@ int state::Monster::getAttack() const {
 
 void state::Monster::setAttack(int Attack) {
     this->Attack = Attack;
+}
+
+void state::Monster::attack(state::MainCharacter &target) {
+
+}
+
+void state::Monster::attacked(state::MainCharacter &attacker) {
+    this->setHealthPoints(this->getHealthPoints()-attacker.getAttack());
 }
 
