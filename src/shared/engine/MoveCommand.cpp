@@ -1,5 +1,6 @@
 
 #include <state/StateEvent.h>
+#include <state/Space.h>
 #include "MoveCommand.h"
 
 engine::MoveCommand::~MoveCommand() {}
@@ -34,5 +35,6 @@ void engine::MoveCommand::execute(state::State &state) {
     this->character->setPosition(pos);*/
     state::StateEvent event(state::MC_CHANGED);
     this->character->setPosition(*this->pos);
+    dynamic_cast<state::Space *>(state.getFloor().get(10,10))->setColored(true);
     state.notifyObserver(event);
 }

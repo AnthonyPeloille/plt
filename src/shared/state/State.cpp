@@ -224,10 +224,21 @@ void state::State::initChars (std::string map, int width, int height){
                 }else{
 
                 }
+                if(ide==41) {
+                    Monster m{state::GHOST};
+                    m.setPosition(state::Coords(j,i));
+                    this->monsters.push_back(std::make_shared<Monster>(m));
+                }else{
+
+                }
                 j++;
             }
             i++;
         }
     }
 
+}
+
+const std::vector<std::shared_ptr<state::MobileElement>> &state::State::getMonsters() const {
+    return this->monsters;
 }

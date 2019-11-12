@@ -23,3 +23,11 @@ void state::Space::setSpaceTypeId(SpaceTypeId spaceTypeId) {
     this->spaceTypeId = spaceTypeId;
 }
 
+bool state::Space::getColored() const {
+    return colored;
+}
+
+void state::Space::setColored(bool colored) {
+    this->colored = colored;
+}
+

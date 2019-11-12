@@ -64,6 +64,7 @@ void render::StateLayer::initSurface() {
     this->menu_side.push_back(std::make_shared<sf::Text>(AttackText));
 
     for(auto chrs : this->state.getChars()){
+        id.str("");
         id << chrs->getTypeId() << 1;
         Tile mc_tile = this->tileset->getTile(std::stoi(id.str()));
         sf::Sprite mc;
@@ -72,6 +73,19 @@ void render::StateLayer::initSurface() {
         mc.setOrigin(0,0);
         mc.setPosition(sf::Vector2f(16*chrs->getPosition().getX()-(mc_tile.getWidth()-16),16*chrs->getPosition().getY()-(mc_tile.getHeight()-8)));
         this->chars.push_back(std::make_shared<sf::Sprite>(mc));
+    }
+
+    for(auto mons : this->state.getMonsters()){
+        id.str("");
+        id << mons->getTypeId() << 1;
+        std::cout << std::stoi(id.str()) << std::endl;
+        Tile mc_tile = this->tileset->getTile(std::stoi(id.str()));
+        sf::Sprite mc;
+        mc.setTexture(this->surface->getTexture());
+        mc.setTextureRect(sf::IntRect(mc_tile.getX(), mc_tile.getY(), mc_tile.getWidth(), mc_tile.getHeight()));
+        mc.setOrigin(0,0);
+        mc.setPosition(sf::Vector2f(16*mons->getPosition().getX()-(mc_tile.getWidth()-16),16*mons->getPosition().getY()-(mc_tile.getHeight()-8)));
+        this->monsters.push_back(std::make_shared<sf::Sprite>(mc));
     }
 
 }
@@ -100,11 +114,22 @@ void render::StateLayer::stateChanged(const state::Event &e) {
     this->menu_top.push_back(std::make_shared<sf::Sprite>(heart1));
     int i = 0;
     for(auto chrs : this->state.getChars()){
+        id.str("");
         id << chrs->getTypeId() << 1;
         Tile mc_tile = this->tileset->getTile(std::stoi(id.str()));
         dynamic_cast<sf::Sprite*>(this->chars[i].get())->setPosition(sf::Vector2f(16*chrs->getPosition().getX()-(mc_tile.getWidth()-16),16*chrs->getPosition().getY()-(mc_tile.getHeight()-8)));
         i++;
     }
+
+    i = 0;
+    for(auto mons : this->state.getMonsters()){
+        id.str("");
+        id << mons->getTypeId() << 1;
+        Tile mc_tile = this->tileset->getTile(std::stoi(id.str()));
+        dynamic_cast<sf::Sprite*>(this->monsters[i].get())->setPosition(sf::Vector2f(16*mons->getPosition().getX()-(mc_tile.getWidth()-16),16*mons->getPosition().getY()-(mc_tile.getHeight()-8)));
+        i++;
+    }
+
 }
 
 const sf::Font &render::StateLayer::getFont() const {
@@ -137,4 +162,12 @@ const std::vector<std::shared_ptr<sf::Drawable>> &render::StateLayer::getMenu_si
 
 void render::StateLayer::setMenu_side(const std::vector<std::shared_ptr<sf::Drawable>> &menu_side) {
     this->menu_side = menu_side;
+}
+
+const std::vector<std::shared_ptr<sf::Drawable>> &render::StateLayer::getMonsters() const {
+    return this->monsters;
+}
+
+void render::StateLayer::setMonsters(const std::vector<std::shared_ptr<sf::Drawable>> &monsters) {
+    this->monsters = monsters;
 }

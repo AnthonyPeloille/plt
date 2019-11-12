@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-render::Scene::Scene(const state::State &state, sf::RenderWindow& window) :state(state),stateLayer(this->state),floorLayer(this->state.getFloor(),1), wallLayer(this->state.getWall(),1), window(window){
+render::Scene::Scene(const state::State &state, sf::RenderWindow& window) :state(state),stateLayer(this->state),floorLayer(this->state.getFloor(),this->state,1), wallLayer(this->state.getWall(),this->state,1), window(window){
     this->state.registerObserver(this);
     this->floorLayer.initSurface();
     this->wallLayer.initSurface();
@@ -8,11 +8,11 @@ render::Scene::Scene(const state::State &state, sf::RenderWindow& window) :state
 }
 
 const size_t render::Scene::getWidth() {
-    return 400;
+    return (80+1)*16;
 }
 
 const size_t render::Scene::getHeight() {
-    return 400;
+    return 45*16;
 }
 
 void render::Scene::stateChanged(const state::Event &event) {
@@ -29,6 +29,9 @@ void render::Scene::draw() {
         this->window.draw(*drawable);
     }
     for(auto drawable : this->stateLayer.getChars()){
+        this->window.draw(*drawable);
+    }
+    for(auto drawable : this->stateLayer.getMonsters()){
         this->window.draw(*drawable);
     }
     this->window.display();

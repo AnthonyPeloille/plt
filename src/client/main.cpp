@@ -36,14 +36,24 @@ void testSFML() {
                     window.close();
                     break;
 
+                case sf::Event::Resized:
+                    scene->draw();
+                    break;
+
                 case sf::Event::KeyPressed:
+
+                    break;
+
+                case sf::Event::MouseMoved:
+                    //std::cout << engine->getState().getChars()[0]->getPosition().getX() << " - " << engine->getState().getChars()[0]->getPosition().getY() << std::endl;
 
                     break;
 
                 case sf::Event::MouseButtonPressed:
                     position = sf::Mouse::getPosition(window);
-                    pos->setX(position.x/16);
-                    pos->setY(position.y/16);
+                    std::cout << window.getSize().x << '-' << scene->getWidth() << std::endl;
+                    pos->setX((int)(position.x/(((float)window.getSize().x)/(float)scene->getWidth()))/16);
+                    pos->setY((int)(position.y/(((float)window.getSize().y)/(float)scene->getHeight()))/16);
                     move = new engine::MoveCommand(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()),pos);
                     engine->getState().getChars()[0]->setDirection(state::NORTH);
                     engine->addCommand(0,move);

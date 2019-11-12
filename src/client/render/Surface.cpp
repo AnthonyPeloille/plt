@@ -11,18 +11,23 @@ void render::Surface::initQuads(int count) {
     quads.resize(count);
 }
 
-void render::Surface::setSprite(const Tile &tex, int j, int i) {
+void render::Surface::setSprite(const Tile &tex, int j, int i, sf::Color color) {
     sf::Vertex* quad = &quads[(i*this->height+j)*4];
 
-    quad[0].position = sf::Vector2f(tex.getHeight()*i,tex.getWidth()*j);
-    quad[1].position = sf::Vector2f(tex.getHeight()*i,tex.getWidth()*(j+1));
-    quad[2].position = sf::Vector2f(tex.getHeight()*(i+1),tex.getWidth()*(j+1));
-    quad[3].position = sf::Vector2f(tex.getHeight()*(i+1),tex.getWidth()*j);
+    quad[0].position = sf::Vector2f((tex.getHeight()*i)*1.f,(tex.getWidth()*j)*1.f);
+    quad[1].position = sf::Vector2f((tex.getHeight()*i)*1.f,(tex.getWidth()*(j+1))*1.f);
+    quad[2].position = sf::Vector2f((tex.getHeight()*(i+1))*1.f,(tex.getWidth()*(j+1))*1.f);
+    quad[3].position = sf::Vector2f((tex.getHeight()*(i+1))*1.f,(tex.getWidth()*j)*1.f);
 
-    quad[0].texCoords = sf::Vector2f(tex.getX(),tex.getY());
-    quad[1].texCoords = sf::Vector2f(tex.getX(),tex.getY()+tex.getWidth());
-    quad[2].texCoords = sf::Vector2f(tex.getX()+tex.getHeight(),tex.getY()+tex.getWidth());
-    quad[3].texCoords = sf::Vector2f(tex.getX()+tex.getHeight(),tex.getY());
+    quad[0].texCoords = sf::Vector2f(tex.getX()*1.f,tex.getY()*1.f);
+    quad[1].texCoords = sf::Vector2f(tex.getX()*1.f,(tex.getY()+tex.getWidth())*1.f);
+    quad[2].texCoords = sf::Vector2f((tex.getX()+tex.getHeight())*1.f,(tex.getY()+tex.getWidth())*1.f);
+    quad[3].texCoords = sf::Vector2f((tex.getX()+tex.getHeight())*1.f,tex.getY()*1.f);
+
+    quad[0].color = color;
+    quad[1].color = color;
+    quad[2].color = color;
+    quad[3].color = color;
 
 }
 
