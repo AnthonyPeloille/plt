@@ -14,7 +14,7 @@ render::StateLayer::StateLayer(const state::State &state):state(state){
 }
 
 void render::StateLayer::initSurface() {
-    int type_id;
+    //int type_id;
     std::stringstream id;
 
     sf::Text title;
@@ -23,7 +23,7 @@ void render::StateLayer::initSurface() {
     title.setCharacterSize(16);
     title.setFillColor(sf::Color::White);
 
-    sf::FloatRect textRect = title.getLocalBounds();
+    //sf::FloatRect textRect = title.getLocalBounds();
     title.setOrigin(0,0);
     title.setPosition(sf::Vector2f(160,16));
 
@@ -31,10 +31,37 @@ void render::StateLayer::initSurface() {
     heart1.setTexture(this->surface->getTexture());
     heart1.setTextureRect(sf::IntRect(288, 256, 16, 16));
     heart1.setOrigin(0,0);
-    heart1.setPosition(sf::Vector2f(16,16));
+    heart1.setPosition(sf::Vector2f(16.f,16.f));
 
-    this->menu.push_back(std::make_shared<sf::Text>(title));
-    this->menu.push_back(std::make_shared<sf::Sprite>(heart1));
+    this->menu_top.push_back(std::make_shared<sf::Text>(title));
+    this->menu_top.push_back(std::make_shared<sf::Sprite>(heart1));
+
+    sf::RectangleShape MoveBox(sf::Vector2f(140.f, 60.f));
+    MoveBox.setFillColor(sf::Color(250,250,250));
+    MoveBox.setPosition(sf::Vector2f(1132.f,96.f));
+
+    sf::Text MoveText;
+    MoveText.setFont(this->font);
+    MoveText.setString("DEPLACEMENT");
+    MoveText.setCharacterSize(16);
+    MoveText.setFillColor(sf::Color::Black);
+    MoveText.setPosition(sf::Vector2f(1136.f,104.f));
+
+    sf::RectangleShape AttackBox(sf::Vector2f(140.f, 60.f));
+    AttackBox.setFillColor(sf::Color(250,250,250));
+    AttackBox.setPosition(sf::Vector2f(1132.f,192.f));
+
+    sf::Text AttackText;
+    AttackText.setFont(this->font);
+    AttackText.setString("ATTAQUE");
+    AttackText.setCharacterSize(16);
+    AttackText.setFillColor(sf::Color::Black);
+    AttackText.setPosition(sf::Vector2f(1136.f,200.f));
+
+    this->menu_side.push_back(std::make_shared<sf::RectangleShape>(MoveBox));
+    this->menu_side.push_back(std::make_shared<sf::Text>(MoveText));
+    this->menu_side.push_back(std::make_shared<sf::RectangleShape>(AttackBox));
+    this->menu_side.push_back(std::make_shared<sf::Text>(AttackText));
 
     for(auto chrs : this->state.getChars()){
         id << chrs->getTypeId() << 1;
@@ -69,8 +96,8 @@ void render::StateLayer::stateChanged(const state::Event &e) {
     heart1.setOrigin(0,0);
     heart1.setPosition(sf::Vector2f(16,16));
 
-    this->menu.push_back(std::make_shared<sf::Text>(title));
-    this->menu.push_back(std::make_shared<sf::Sprite>(heart1));
+    this->menu_top.push_back(std::make_shared<sf::Text>(title));
+    this->menu_top.push_back(std::make_shared<sf::Sprite>(heart1));
     int i = 0;
     for(auto chrs : this->state.getChars()){
         id << chrs->getTypeId() << 1;
@@ -88,12 +115,12 @@ void render::StateLayer::setFont(const sf::Font &font) {
 
 }
 
-const std::vector<std::shared_ptr<sf::Drawable>> &render::StateLayer::getMenu() const {
-    return this->menu;
+const std::vector<std::shared_ptr<sf::Drawable>> &render::StateLayer::getMenu_top() const {
+    return this->menu_top;
 }
 
-void render::StateLayer::setMenu(const std::vector<std::shared_ptr<sf::Drawable>> &menu) {
-
+void render::StateLayer::setMenu_top(const std::vector<std::shared_ptr<sf::Drawable>> &menu_top) {
+    this->menu_top = menu_top;
 }
 
 const std::vector<std::shared_ptr<sf::Drawable>> &render::StateLayer::getChars() const {
@@ -102,4 +129,12 @@ const std::vector<std::shared_ptr<sf::Drawable>> &render::StateLayer::getChars()
 
 void render::StateLayer::setChars(const std::vector<std::shared_ptr<sf::Drawable>> &chars) {
     this->chars = chars;
+}
+
+const std::vector<std::shared_ptr<sf::Drawable>> &render::StateLayer::getMenu_side() const {
+    return menu_side;
+}
+
+void render::StateLayer::setMenu_side(const std::vector<std::shared_ptr<sf::Drawable>> &menu_side) {
+    this->menu_side = menu_side;
 }

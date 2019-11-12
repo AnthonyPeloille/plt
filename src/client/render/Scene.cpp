@@ -22,7 +22,10 @@ void render::Scene::stateChanged(const state::Event &event) {
 void render::Scene::draw() {
     this->window.draw(*this->floorLayer.getSurface());
     this->window.draw(*this->wallLayer.getSurface());
-    for(auto drawable : this->stateLayer.getMenu()){
+    for(auto drawable : this->stateLayer.getMenu_top()){
+        this->window.draw(*drawable);
+    }
+    for(auto drawable : this->stateLayer.getMenu_side()){
         this->window.draw(*drawable);
     }
     for(auto drawable : this->stateLayer.getChars()){
