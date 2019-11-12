@@ -78,7 +78,7 @@ void render::StateLayer::initSurface() {
     for(auto mons : this->state.getMonsters()){
         id.str("");
         id << mons->getTypeId() << 1;
-        std::cout << std::stoi(id.str()) << std::endl;
+        //std::cout << std::stoi(id.str()) << std::endl;
         Tile mc_tile = this->tileset->getTile(std::stoi(id.str()));
         sf::Sprite mc;
         mc.setTexture(this->surface->getTexture());

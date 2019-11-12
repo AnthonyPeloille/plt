@@ -8,7 +8,7 @@ render::Scene::Scene(const state::State &state, sf::RenderWindow& window) :state
 }
 
 const size_t render::Scene::getWidth() {
-    return (80+1)*16;
+    return 80*16;
 }
 
 const size_t render::Scene::getHeight() {
@@ -35,4 +35,12 @@ void render::Scene::draw() {
         this->window.draw(*drawable);
     }
     this->window.display();
+}
+
+sf::FloatRect render::Scene::getMoveBounds() const{
+    return dynamic_cast<sf::RectangleShape*>(this->stateLayer.getMenu_side()[0].get())->getGlobalBounds();
+}
+
+sf::FloatRect render::Scene::getAttackBounds() const{
+    return dynamic_cast<sf::RectangleShape*>(this->stateLayer.getMenu_side()[2].get())->getGlobalBounds();
 }

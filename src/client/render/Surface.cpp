@@ -46,3 +46,4 @@ const sf::Texture &render::Surface::getTexture() const {
 void render::Surface::setTexture(const sf::Texture &texture) {
     this->texture = texture;
 }
+

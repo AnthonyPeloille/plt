@@ -23,16 +23,6 @@ BOOST_AUTO_TEST_CASE(TestDoor)
 
     {
         Door door {};
-        BOOST_CHECK_EQUAL(door.getX(), 0);
-        BOOST_CHECK_EQUAL(door.getY(), 0);
-        door.setX(23);
-        door.setY(32);
-        BOOST_CHECK_EQUAL(door.getX(), 23);
-        BOOST_CHECK_EQUAL(door.getY(), 32);
-    }
-
-    {
-        Door door {};
         BOOST_CHECK_EQUAL(door.isOpened(), false);
     }
 
@@ -49,16 +39,6 @@ BOOST_AUTO_TEST_CASE(TestWall)
         BOOST_CHECK_EQUAL(wall.getWallTypeId(), 2);
     }
 
-    {
-        Wall wall {BOTTOMLEFT};
-        BOOST_CHECK_EQUAL(wall.getX(), 0);
-        BOOST_CHECK_EQUAL(wall.getY(), 0);
-        wall.setX(34);
-        wall.setY(43);
-        BOOST_CHECK_EQUAL(wall.getX(), 34);
-        BOOST_CHECK_EQUAL(wall.getY(), 43);
-    }
-
 }
 
 BOOST_AUTO_TEST_CASE(TestSpace)
@@ -72,16 +52,6 @@ BOOST_AUTO_TEST_CASE(TestSpace)
         BOOST_CHECK_EQUAL(space.getSpaceTypeId(), 3);
     }
 
-    {
-        Space space {EMPTY};
-        BOOST_CHECK_EQUAL(space.getX(), 0);
-        BOOST_CHECK_EQUAL(space.getY(), 0);
-        space.setX(45);
-        space.setY(54);
-        BOOST_CHECK_EQUAL(space.getX(), 45);
-        BOOST_CHECK_EQUAL(space.getY(), 54);
-    }
-
 }
 
 BOOST_AUTO_TEST_CASE(TestChest)
@@ -93,24 +63,6 @@ BOOST_AUTO_TEST_CASE(TestChest)
         BOOST_CHECK_EQUAL(chest.getChestContentId(), 1);
         chest.setChestContentId(PowerBoost);
         BOOST_CHECK_EQUAL(chest.getChestContentId(), 2);
-    }
-
-    {
-        Chest chest {PowerBoost};
-        BOOST_CHECK_EQUAL(chest.getX(), 0);
-        BOOST_CHECK_EQUAL(chest.getY(), 0);
-        chest.setX(45);
-        chest.setY(13);
-        BOOST_CHECK_EQUAL(chest.getX(), 45);
-        BOOST_CHECK_EQUAL(chest.getY(), 13);
-    }
-
-    {
-        Chest chest {DefenseBoost};
-        chest.setX(75);
-        chest.setY(23);
-        BOOST_CHECK_LE(chest.getX(), 90); // Less than equal
-        BOOST_CHECK_GT(chest.getY(), 11); // Greater than equal
     }
 
     {
@@ -151,21 +103,14 @@ BOOST_AUTO_TEST_CASE(TestMonster)
 
     {
         Monster monster {GHOST};
-        monster.setPosition(10);
+        Coords pos {10,5};
+        monster.setPosition(pos);
         monster.setSpeed(50);
-        BOOST_CHECK_EQUAL(monster.getPosition(),10);
+        BOOST_CHECK_EQUAL(monster.getPosition().getX(),10);
+        BOOST_CHECK_EQUAL(monster.getPosition().getY(),5);
         BOOST_CHECK_EQUAL(monster.getSpeed(),50);
     }
 
-    {
-        Monster monster {GHOST};
-        BOOST_CHECK_EQUAL(monster.getX(),0);
-        BOOST_CHECK_EQUAL(monster.getY(),0);
-        monster.setX(1);
-        monster.setY(11);
-        BOOST_CHECK_EQUAL(monster.getX(),1);
-        BOOST_CHECK_EQUAL(monster.getY(),11);
-    }
 }
 
 BOOST_AUTO_TEST_CASE(TestMainCharacter)
@@ -195,20 +140,22 @@ BOOST_AUTO_TEST_CASE(TestMainCharacter)
 
     {
         MainCharacter link {};
-        link.setPosition(20);
+        Coords pos {10,15};
+        link.setPosition(pos);
         link.setSpeed(30);
-        BOOST_CHECK_EQUAL(link.getPosition(),20);
+        BOOST_CHECK_EQUAL(link.getPosition().getX(),10);
+        BOOST_CHECK_EQUAL(link.getPosition().getY(),15);
         BOOST_CHECK_EQUAL(link.getSpeed(),30);
     }
 
     {
         MainCharacter link {};
-        BOOST_CHECK_EQUAL(link.getX(),0);
-        BOOST_CHECK_EQUAL(link.getY(),0);
-        link.setX(2);
-        link.setY(22);
-        BOOST_CHECK_EQUAL(link.getX(),2);
-        BOOST_CHECK_EQUAL(link.getY(),22);
+        BOOST_CHECK_EQUAL(link.getPosition().getX(),0);
+        BOOST_CHECK_EQUAL(link.getPosition().getY(),0);
+        Coords pos {5,10};
+        link.setPosition(pos);
+        BOOST_CHECK_EQUAL(link.getPosition().getX(),5);
+        BOOST_CHECK_EQUAL(link.getPosition().getY(),10);
     }
 
 }
