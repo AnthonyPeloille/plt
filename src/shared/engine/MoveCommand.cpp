@@ -33,8 +33,10 @@ void engine::MoveCommand::execute(state::State &state) {
             break;
     }
     this->character->setPosition(pos);*/
-    state::StateEvent event(state::MC_CHANGED);
-    this->character->setPosition(*this->pos);
-    dynamic_cast<state::Space *>(state.getFloor().get(10,10))->setColored(true);
-    state.notifyObserver(event);
+    if (!this->character->getIsFighting()) {
+        state::StateEvent event(state::MC_CHANGED);
+        this->character->setPosition(*this->pos);
+        dynamic_cast<state::Space *>(state.getFloor().get(10, 10))->setColored(true);
+        state.notifyObserver(event);
+    }
 }

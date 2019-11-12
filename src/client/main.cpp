@@ -22,7 +22,9 @@ void testSFML() {
     auto* pos = new state::Coords(0,20);
     auto* move = new engine::MoveCommand(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()),pos);
     engine->getState().getChars()[0]->setDirection(state::NORTH);
-    engine->addCommand(0,move);
+    engine->addCommand(1,move);
+    auto* attack = new engine::AttackCommand(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()));
+    engine->addCommand(0,attack);
     bool start = true;
     sf::Vector2i position = sf::Mouse::getPosition();
     while (window.isOpen())
@@ -55,8 +57,10 @@ void testSFML() {
                     pos->setX((int)(position.x/(((float)window.getSize().x)/(float)scene->getWidth()))/16);
                     pos->setY((int)(position.y/(((float)window.getSize().y)/(float)scene->getHeight()))/16);
                     move = new engine::MoveCommand(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()),pos);
+                    attack = new engine::AttackCommand(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()));
                     engine->getState().getChars()[0]->setDirection(state::NORTH);
-                    engine->addCommand(0,move);
+                    engine->addCommand(0,attack);
+                    engine->addCommand(1,move);
                     break;
 
                 default:

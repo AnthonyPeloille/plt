@@ -34,3 +34,11 @@ void state::MobileElement::setPosition(const Coords& position) {
     this->position = position;
 }
 
+bool state::MobileElement::getIsFighting() const {
+    return isFighting;
+}
+
+void state::MobileElement::setIsFighting(bool isFighting) {
+    this->isFighting = isFighting;
+}
+
