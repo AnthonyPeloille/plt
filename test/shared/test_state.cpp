@@ -10,6 +10,19 @@ BOOST_AUTO_TEST_CASE(TestStaticAssert)
   BOOST_CHECK(1);
 }
 
+BOOST_AUTO_TEST_CASE(TestCoords)
+{
+    Coords c1 = Coords(10,15);
+    Coords c2 = Coords(10,20);
+    Coords c3 = c1;
+    BOOST_CHECK_EQUAL(c1==c3,true);
+    BOOST_CHECK_EQUAL(c1==c2,false);
+    c2.setY(50);
+    c2.setX(5);
+    BOOST_CHECK_EQUAL(c2.getY(),50);
+    BOOST_CHECK_EQUAL(c2.getX(),5);
+}
+
 BOOST_AUTO_TEST_CASE(TestDoor)
 {
     {

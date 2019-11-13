@@ -18,6 +18,7 @@ void testSFML() {
     //window.draw(sprite);
     //state->getGrid().resize(10,10);
     auto* engine = new engine::Engine();
+    engine->init("../res/map.txt","../res/wall.txt");
     auto* scene = new render::Scene(engine->getState(),window);
     auto* pos = new state::Coords(10,20);
     auto* move = new engine::MoveCommand(dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()),pos);
