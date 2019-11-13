@@ -89,14 +89,14 @@ Les mécaniques du jeu s'inspirent de The Legend of Zelda (1986) qui est un jeu 
 
 \subsection{Règles du jeu}
 
-Le joueur évolue dans un donjon dont la structure des étages est générée aléatoirement. A chaque étage il doit atteindre un boss, pour cela il se déplace de case en case à la manière d’un jeu de plateau. Les cases peuvent contenir différents types d'évènements : combat, récompense, bonus, malus.... Le but est de sortir du donjon en ayant complété chaque étage, c'est-à-dire avoir vaincu chacun des boss. 
+Le joueur évolue dans un donjon avec plusieurs étages. A chaque étage il doit atteindre un boss, pour cela il se déplace de case en case à la manière d’un jeu de plateau. Les cases peuvent contenir différents types d'évènements : combat, récompense, bonus, malus.... Le but est de sortir du donjon en ayant complété chaque étage, c'est-à-dire avoir vaincu chacun des boss. 
 \bigbreak
-Les phases de combats se déroulent se forme de combats tour par tour, à chaque tour le personnage peut attaquer (différents coups d'épée) puis le tour suivant, l'ennemi attaque. Chaque personnage (personnage principal ou ennemi) dispose de 3 caractéristiques :
+Les phases de combats se déroulent sous forme de combats au tour par tour, à chaque tour le personnage peut attaquer (différents coups d'épée) puis le tour suivant, l'ennemi attaque. Chaque personnage (personnage principal ou ennemi) dispose de 3 caractéristiques :
 - Les points de vie/Health Points, lorsque ceux-ci arrivent à 0 le personnage meurt. 
 - L'attaque , conditionne les dégâts qu'inflige un coup.
 - La défense, détermine la quantité de point de vie perdue après avoir reçu une attaque.
 \bigbreak
- Le personnage peut trouver de l’équipement lui permettant d’augmenter ses statistiques (vie, armure, puissance).
+ Le personnage peut, au cours de son aventure, augmenter ses statistiques.
 
 \subsection{Ressources}
 
@@ -120,7 +120,8 @@ Les phases de combats se déroulent se forme de combats tour par tour, à chaque
 \subsection{Description des états}
 
 Pour chacun des états du jeu, on retrouve une combinaison d'éléments fixes (la structure du labyrinthe) et d'éléments mobiles (personnage principal et ennemis).
-Pour chaque élément, on comptera 2 propriétés que sont sa position et son identifiant (un id pour les murs, un pour les ennemis, le personnage principal ...).
+Seuls les personnages mobiles possèdent une position sous forme de coordonnées (x et y). Pour les éléments statiques, nous initialisons un tableau avec des éléments.
+Tous les éléments ont en commun un identifiant qu'est le TypeId (un id pour les murs, un pour les ennemis, le personnage principal ...).
 
 \subsubsection{État éléments fixes}
 
@@ -140,12 +141,12 @@ Cases "Coffre" (Chest) : Ce dernier type de case correspond à des cases qui per
 
 \subsubsection{État éléments mobiles}
 
-Les éléments mobiles ont 3 caractéristiques, une direction (les 4 points cardinaux et une direction nulle), une vitesse et une position.
+Les éléments mobiles ont 3 caractéristiques, une direction (les 4 points cardinaux et une direction nulle), une position et une variable (isFighting) indiquant si l'élément est en combat ou non.
 Lorsque la position est à 0 alors l'élément est exactement sur la case, sinon il se trouve entre sa case originale et la case qui correspond à sa direction, quand la position à la même valeur que la vitesse, le personnage se déplace dans la direction correspondante.
 \bigbreak
 Nous avons défini 2 éléments mobiles que sont les ennemis (2 types pour le moment : Ghost, l'ennemi basique et Boss, l'ennemi plus puissant qui permet d'accéder à l'étage suivant) et le personnage principal (MainCharacter) qui n'est autre que le personnage contrôlé par le joueur.
-Ces éléments mobiles ne disposent chacun que de 2 états : Alive et Dead, ils démarrent dans l'état Alive et passent à l'état Dead si leurs points de vie atteignent 0, pour les ennemis, ils disparaissent du jeu et pour le joueur, cela signifie la fin de la partie (donc le retour au 1er étage).
-Comme détaillé dans la partie règle du jeu, ces éléments disposent de 3 caractéristiques sui déterminent leur puissance de combat (HealthPoints, Attack et Defense).
+Ces éléments mobiles démarrent avec un certain nombre de PV (exemple 6 pv pour le joueur), si leurs points de vie atteignent 0, pour les ennemis, ils disparaissent du jeu et pour le joueur, cela signifie la fin de la partie.
+Comme détaillé dans la partie règle du jeu, ces éléments disposent de 3 caractéristiques sui déterminent leurs puissances de combat (HealthPoints, Attack et Defense).
 
 \subsubsection{État général}
 
@@ -155,24 +156,28 @@ La seconde permet de régler la vitesse du jeu en réglant le nombre d'époque p
 
 \subsection{Conception Logiciel}
 
-On peut voir notre diagramme des classes sur la page suivante (Figure x), on y retrouve donc toutes les classes mentionnées auparavant qui permettent de définir un état du jeu :
+On peut voir notre diagramme des classes sur la page suivante (Figure 4), on y retrouve donc toutes les classes mentionnées auparavant qui permettent de définir un état du jeu :
 - MobileElement qui permet de définir des éléments mobiles et dont héritent les classes Monstre (ennemis) et MainCharacter (personnage jouable).
-- StaticElement qui à le même rôle pour les éléments statiques qu'on retrouvera dans les étages de notre donjon : murs, portes, coffres ou espaces vides permettant aux personnages de se déplacer.
+- StaticElement qui à le même rôle pour les éléments statiques qu'on retrouvera dans les étages de notre donjon : murs, portes, coffres ou "sol" permettant aux personnages de se déplacer.
 - State qui gère la vitesse du jeu et le nombre de tours effectués.
 - Il y aussi de nombreuses classes dédiées à l'énumération de statuts ou de types.
 \bigbreak
 Il reste donc 3 classes : 
 \bigbreak
-Classe Element : Cette classe permet de définir chacun des éléments du jeu, qu'ils soient statiques ou mobiles. Ses seules caractéristiques sont des coordonnées (notés x et y) pour connaître la position de l'élément.
+Classe Element : Cette classe permet de définir chacun des éléments du jeu, qu'ils soient statiques ou mobiles. Elle contenait à l'origine les coordonnées (x,y) de chaque élément mais ceux-ci n'étaient utiles que pour les éléments mobiles. Nous avons tout de même gardé la classe element pour sa liaison avec TypeId et pour éviter de changer une grande partie des fonctions déjà implémentés.
 \bigbreak
 Classe ElementTab :  Comme son nom le laisse entendre, on a ici, un conteneur d'éléments qui n'est autre qu'un tableau en deux dimensions. Celui-ci contient donc l'intégralité des éléments dispersés sur un étage du donjon.
 Son format est un vecteur de vecteur (donc un tableau) de unique ptr, ce format nous a paru pratique puisque nous n'avons pas à préciser la taille dès la définition de l'attribut et le unique ptr nous permet de facilement accéder à chacun des éléments dans le tableau.
 A noter que le conteneur principal est la classe State qui contient la totalité des données liées à un état donné.
 \bigbreak
 Classe Observable : Le but de cette classe va être de réagir à des modifications de l'état du jeu (donc de la classe state), cette classe s'avère surtout utile pour les éléments de rendus qui mettront à jour les sprites. On a 2 types d'événements : TabEvent et StateEvent qui héritent de la classe Event.
+
+StateEvent correspond aux événements qui touchent ce qu'on trouvera dans la classe StateLayer, c'est-à-dire le personnage principal, les monstres, les éléments annexes affichés (boutons, vitalité du perso, texte ...).
+
+TabEvent correspond de son côté aux éléments contenus dans les tableaux ElementTab, donc les sols, murs, coffres ou portes (il y aura notamment des event liés à l'ouverture d'un coffre ou d'une porte).
 \bigbreak
 Il est à noter qu'afin de pouvoir fabriquer des nouvelles instances d'éléments, nous avons décidé d'implémenter une méthode clone() pour chacun des éléments (statiques ou mobiles) que nous pouvons construire. 
-L'implémentation de cette méthode répond à un problème lié au format de notre tableau d'élément (vector(vector(unique ptr(Element)))), lorsque nous souhaitons ajouter un élément au tableau, l'élément doit être cloné avant d'être ajouté au tableau sinon celui-ci est immédiatement détruit.
+L'implémentation de cette méthode répond à un problème lié au format de notre tableau d'élément (vector(vector(unique ptr(Element)))), lorsque nous souhaitons ajouter un élément au tableau, l'élément doit être cloné avant d'être ajouté au tableau sinon celui-ci est doublement détruit (double free).
 
 \begin{landscape}
 \begin{figure}[p]
@@ -191,10 +196,9 @@ Pour la stratégie de rendu d'un état, nous avons choisi de diviser les éléme
 \bigbreak
 Le premier plan nommé floorLayer contient le sol, il recouvre la totalité de la map avec des éléments de type Floor.
 Le second plan nommé wallLayer contient les autres éléments statiques : mur, coffres ou portes.
-Le troisième plan nommé charsLayer contiendra les éléments mobiles (personnage contrôlé par le joueur ou les ennemis contrôlés par l'IA).
-Enfin, il reste un dernier plan stateLayer que nous n'utilisons pas encore mais qui servira à afficher des éléments liés à l'état du jeu à un instant T, par exemple la barre de vie du joueur, le score ...
+Enfin, il reste un dernier plan stateLayer qui sert à afficher les personnages (personnage principal ou monstre ) contenus dans des listes et non des tableaux car ils possèdent des coordonnées en argument, ce plan sert aussi à afficher des éléments secondaires comme une barre de vie, du texte, des boutons pour le déplacement ou l'attaque ...
 \bigbreak
-Pour créer notre map, nous utilisons des fichiers .txt contenus dans le dossier src (donc pas à la racine du projet), pour l'instant nous avons écrit 2 fichiers txt, un par layer que nous avons crée (Floor et Wall).
+Pour créer notre map, nous utilisons des fichiers .txt contenus dans le dossier src (donc pas à la racine du projet), pour l'instant nous avons écrit 2 fichiers txt, un par layer que nous avons crée (Floor et Wall), à noter que le fichier wall.txt contient des informations sur tous les éléments affichés à l'écran autres que le sol.
 Nous avons affecté à chacune des tuiles un ID qui se lit de la manière suivante :
 - Le premier chiffre correspond au TypeID de l'objet (1 = wall, 2 = space ...).
 - Le second (peut être supérieur à 10) correspond au sous-type d'élément, par exemple si c'est un mur de type vertical, on a le WallTypeID vert = 6 (on écrira alors 16 dans le fichier txt). Si c'est un élément space "vide" on a le SpaceTypeID empty = 1 (on écrira cette fois-ci 21 dans le fichier txt).
@@ -223,22 +227,52 @@ Pour obtenir n'importe laquelle de ces tuiles, nous utilisons la fonction getTil
 \end{landscape}
 
 \clearpage
-%\section{Règles de changement d'états et moteur de jeu}
-%
-%\subsection{Règles}
-%
-%\clearpage
-%\subsection{Conception logiciel}
-%
-%
-%%\begin{landscape}
-%%\begin{figure}[p]
-%%\includegraphics[width=0.9\paperheight]{engine.pdf}
-%%\caption{\label{uml:engine}Diagramme des classes de moteur de jeu.} 
-%%\end{figure}
-%%\end{landscape}
-%
-%
+\section{Règles de changement d'états et moteur de jeu}
+
+\subsection{Changements extérieurs}
+
+Nous avons des changements liés à des facteurs extérieurs, notamment avec la souris : 
+- Une pression avec la souris sur le bouton "déplacement" (sur la droite de l'écran) affiche les possibilités de déplacement pour le personnage principal (les cases prennent une couleur verte)
+- Une pression sur l'une de ces cases (donc uniquement après avoir pressé le bouton "déplacement") provoque le déplacement du personnage sur la case sélectionné.
+- Lorsqu'un monstre se trouve sur une case adjacente de celle sur laquelle se trouve le personnage principal (pas les cases en diagonale), le joueur peut presser le bouton attaque pour infliger des dégâts au monstre, après plusieurs attaques, les pv de celui-ci tombent à 0 et le monstre disparaît de l'affichage.
+
+\subsection{Changements autonomes}
+
+Certains changements sont appliquées à chaque création ou mise à jour d'un état :
+- Si le joueur se déplace sur une case qui se trouve à côté d'un monstre, alors il ne peut plus se déplacer avant la fin du combat (la mort du monstre), une fois le monstre vaincu et disparu, le personnage peut à nouveau se déplacer.
+- Le joueur ne peut pas se déplacer sur des cases de type "mur"
+- Les pv d'un monstre attaqué sont modifiés et s'ils arrivent à 0, le monstre disparaît de l'affichage.
+
+\subsection{Conception logiciel}
+
+Le diagramme des classes pour notre moteur de jeu est visible sur la page suivante. Celui-ci s'appuie sur différentes classes de type Command et a pour but l’exécution, dans un certain ordre, de différents types de commandes extérieures sur l'état du jeu.
+\bigbreak
+Classe Command et ses classes filles :
+Chacune de ces classe vise à représenter un certain type de commande qui changera d'une manière ou d'une autre l'état de notre jeu, il est à noter que ce n'est pas dans ces classes que se déroule la gestion des entrées utilisateurs (appui sur une touche du clavier, de la souris ..).
+On à également défini un type CommandTypeId pour identifier précisément la classe de n'importe quelle instance d'une commande.
+Voici une description des différentes classes de commandes qui se trouvent actuellement dans notre diagramme des classes :
+- MoveCommand, il s'agit de la classe qui gère les déplacements de notre personnage.
+- PathCommand, cette classe s'occupe d'illuminer en vert les cases sur lesquelles le joueur peut se déplacer (n'illumine donc pas les cases "mur").
+- AttackCommand, permet d'attaquer un monstre se trouvant sur une case adjacente (pas les diagonales)
+Il reste 2 classes pas encore implémentés :
+- LoadCommand, permet de charger une carte à partir d'un fichier, pour l'instant nous n'avons qu'une seule carte qui est chargée dès le lancement du jeu donc elle n'est pas encore implémenté.
+- HandleCollisionsCommand, gère les collisions si le personnage et le monstre se trouvent sur la même case.
+\bigbreak
+Classe engine :
+Cette classe représente le cœur de notre moteur de jeu. L'attribut currentState stocke l'état du jeu et l'attribut currentCommands est une std::map qui stocke les commandes à exécuter.
+Grâce au format std::map, on introduit une priorité entre les commandes, les clés représentent la priorité, et plus elles sont petites, plus la commande sera exécuté tôt dans la liste .
+A chaque appel de la méthode update(), le moteur va appeler la méthode execute de chacune des commandes stockées dans currentCommands puis nettoyer la liste (retirer toutes les commandes).
+\bigbreak
+A noter que les events liés à des actions du joueur (appui sur le clavier, souris ...) sont pour l'instant traitées dans le main(), nous comptons déplacer toute cette partie dans une classe dédiée à cela dans le render.
+
+\begin{landscape}
+\begin{figure}[p]
+\includegraphics[width=0.9\paperheight]{engine.pdf}
+\caption{\label{uml:engine}Diagramme des classes de moteur de jeu.} 
+\end{figure}
+\end{landscape}
+
+
 %\section{Intelligence Artificielle}
 %
 %\subsection{Stratégies}
@@ -247,12 +281,12 @@ Pour obtenir n'importe laquelle de ces tuiles, nous utilisons la fonction getTil
 %\subsection{Conception logiciel}
 %
 %
-%%\begin{landscape}
-%%\begin{figure}[p]
-%%\includegraphics[width=0.9\paperheight]{ai.pdf}
-%%\caption{\label{uml:ai}Diagramme des classes d'intelligence artificielle.} 
-%%\end{figure}
-%%\end{landscape}
+%\begin{landscape}
+%\begin{figure}[p]
+%\includegraphics[width=0.9\paperheight]{ai.pdf}
+%\caption{\label{uml:ai}Diagramme des classes d'intelligence artificielle.} 
+%\end{figure}
+%\end{landscape}
 %
 %
 %\section{Modularisation}
