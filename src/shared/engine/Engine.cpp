@@ -3,14 +3,15 @@
 
 engine::Engine::Engine() {
     this->currentState = state::State();
-    std::string map = "../res/map.txt";
-    currentState.initFloor(map,80,45);
-    std::string wall = "../res/wall.txt";
-    currentState.initWall(wall,80,45);
-    currentState.initChars(wall,80,45);
 }
 
 engine::Engine::~Engine() = default;
+
+void engine::Engine::init(std::string map, std::string walls) {
+    currentState.initFloor(map,80,45);
+    currentState.initWall(walls,80,45);
+    currentState.initChars(walls,80,45);
+}
 
 const state::State &engine::Engine::getState() const {
     return this->currentState;
