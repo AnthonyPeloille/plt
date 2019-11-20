@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "render.h"
 #include "engine.h"
+#include "ai.h"
 
 void testSFML() {
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML window");
@@ -98,6 +99,53 @@ void testSFML() {
     }
 }
 
+void testAI() {
+    sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML window");
+    sf::Texture texture;
+    texture.loadFromFile("../res/DungeonTiles/0x72_DungeonTilesetII_v1.3.png");
+    sf::RenderStates states;
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+    sprite.setTextureRect(sf::IntRect(16, 16, 16, 16));
+    //sprite.setColor(sf::Color(255, 255, 255, 200));
+    sprite.setPosition(100, 25);
+    //window.draw(sprite);
+    //state->getGrid().resize(10,10);
+    auto* engine = new engine::Engine();
+    engine->init("../res/map.txt","../res/wall.txt");
+    auto* scene = new render::Scene(engine->getState(),window);
+    auto* r_ai = new ai::RandomAI(time(0));
+    bool start = true;
+    while (window.isOpen())
+    {
+        // Event processing
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            switch(event.type) {
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        r_ai->run(*engine, *dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()));
+        // Clear the whole window before rendering a new frame
+        window.clear();
+        // Draw some graphical entities
+        //window.draw(*surface);
+        if(start){
+            scene->draw();
+            start = false;
+        }
+        // End the current frame and display its contents on screen
+        sf::sleep(sf::milliseconds(100));
+        engine->update();
+    }
+}
+
 // Fin test SFML
 
 #include <state.h>
@@ -107,7 +155,8 @@ using namespace state;
 
 int main(int argc,char* argv[])
 {
-    testSFML();
+    //testSFML();
+    testAI();
     //Exemple exemple;
     //exemple.setX(53);
     //state::Door door {};
