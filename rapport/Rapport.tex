@@ -273,22 +273,31 @@ A noter que les events liés à des actions du joueur (appui sur le clavier, sou
 \end{landscape}
 
 
-%\section{Intelligence Artificielle}
-%
-%\subsection{Stratégies}
-%
-%\clearpage
-%\subsection{Conception logiciel}
-%
-%
-%\begin{landscape}
-%\begin{figure}[p]
-%\includegraphics[width=0.9\paperheight]{ai.pdf}
-%\caption{\label{uml:ai}Diagramme des classes d'intelligence artificielle.} 
-%\end{figure}
-%\end{landscape}
-%
-%
+\section{Intelligence Artificielle}
+
+\subsection{Stratégies}
+
+\subsubsection{RandomAI}
+
+Comme son nom l'indique, cette première intelligence artificielle est très basique et repose uniquement sur de l'aléatoire, à chaque nouveau tour, le personnage se déplace sur une case adjacente aléatoire
+
+\clearpage
+\subsection{Conception logiciel}
+
+Le diagramme des classes pour notre intelligence artificielle (ai.dia) est visible sur la page suivante.
+\bigbreak
+La classe AI est la classe mère de toutes les différentes intelligences artificielles que nous implémenterons dans différentes classes :
+
+- RandomAI : intelligence aléatoire, son fonctionnement est très peu complexe et cette classe ne nécessite qu'un attribut généré aléatoirement (ici randgen).
+
+\begin{landscape}
+\begin{figure}[p]
+\includegraphics[width=0.9\paperheight]{ai.pdf}
+\caption{\label{uml:ai}Diagramme des classes d'intelligence artificielle.} 
+\end{figure}
+\end{landscape}
+
+
 %\section{Modularisation}
 %\label{sec:module}
 %
