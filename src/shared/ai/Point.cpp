@@ -2,7 +2,7 @@
 #include "Point.h"
 
 ai::Point::Point(state::Coords Coord, int w) {
-    this->coord = coord;
+    this->coord = Coord;
     this->weight = w;
 }
 
