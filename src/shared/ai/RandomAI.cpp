@@ -5,7 +5,7 @@
 #include <engine/MoveCommand.h>
 #include "RandomAI.h"
 
-ai::RandomAI::RandomAI(int randomSeed) {
+ai::RandomAI::RandomAI(const state::State &state, int randomSeed) : AI(state) {
     this->randgen.seed(randomSeed);
 }
 
@@ -37,5 +37,9 @@ void ai::RandomAI::run(engine::Engine &engine, state::MainCharacter &character) 
         auto* attack = new engine::AttackCommand(&character);
         engine.addCommand(0,attack);
     }
+}
+
+void ai::RandomAI::stateChanged(const state::Event &event) {
+
 }
 

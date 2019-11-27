@@ -114,7 +114,7 @@ void testAI() {
     auto* engine = new engine::Engine();
     engine->init("../res/map.txt","../res/wall.txt");
     auto* scene = new render::Scene(engine->getState(),window);
-    auto* r_ai = new ai::RandomAI(time(0));
+    auto* r_ai = new ai::RandomAI(engine->getState(), time(0));
     bool start = true;
     while (window.isOpen())
     {
