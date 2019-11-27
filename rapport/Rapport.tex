@@ -277,9 +277,13 @@ A noter que les events liés à des actions du joueur (appui sur le clavier, sou
 
 \subsection{Stratégies}
 
-\subsubsection{RandomAI}
+\subsubsection{Intelligence artificielle basée sur l'aléatoire}
 
 Comme son nom l'indique, cette première intelligence artificielle est très basique et repose uniquement sur de l'aléatoire, à chaque nouveau tour, le personnage se déplace sur une case adjacente aléatoire
+
+\subsubsection{Intelligence artificielle basée sur des heuristiques}
+
+Cette intelligence artificielle est déjà plus développée que la précédente puisque cette fois-ci, les commandes possibles pour le personnage seront affectées d'un poids. Ce poids permettra d'effectuer des mouvements qui l'aideront à remplir son objectif : combattre et tuer un monstre disposé sur la map.
 
 \clearpage
 \subsection{Conception logiciel}
@@ -287,8 +291,11 @@ Comme son nom l'indique, cette première intelligence artificielle est très bas
 Le diagramme des classes pour notre intelligence artificielle (ai.dia) est visible sur la page suivante.
 \bigbreak
 La classe AI est la classe mère de toutes les différentes intelligences artificielles que nous implémenterons dans différentes classes :
-
+\bigbreak
 - RandomAI : intelligence aléatoire, son fonctionnement est très peu complexe et cette classe ne nécessite qu'un attribut généré aléatoirement (ici randgen).
+\bigbreak
+-HeuristicAI : L'IA heuristique repose sur l'attribution de poids aux positions auxquelles le personnage peut accéder (les cases adjacentes), on définit donc l'attribut weight dans une classe Point qui importe les coordonnées (notée coord). 
+La classe PathMap permet ensuite d'attribuer des poids aux points en fonction de la distance qui sépare le point de l'objectif du personnage (les monstres), plus la distance est petite, plus le poids est élevé.
 
 \begin{landscape}
 \begin{figure}[p]
