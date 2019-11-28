@@ -43,8 +43,8 @@ render::GridTileSet::GridTileSet() {
     this->spaces.push_back(*floor_clean);
     Tile *floor_cracked = new Tile(32,64,16,16);
     this->spaces.push_back(*floor_cracked);
-    Tile *floor_hole_right = new Tile(48,64,16,16);
-    this->spaces.push_back(*floor_hole_right);
+    Tile *end_ladder = new Tile(48, 96, 16, 16);
+    this->spaces.push_back(*end_ladder);
     Tile *chest_closed = new Tile(304,288,16,16);
     this->chests.push_back(*chest_closed);
 
