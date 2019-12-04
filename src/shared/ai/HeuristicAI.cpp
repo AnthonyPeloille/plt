@@ -6,7 +6,7 @@
 
 ai::HeuristicAI::HeuristicAI(const state::State &state, int randomSeed) :AI(state){
     this->randgen.seed(randomSeed);
-    this->monstersMap.init(state.getWall(),state.getMonsters(),*dynamic_cast<state::MainCharacter*>(state.getChars()[0].get()));
+    this->monstersMap.init(state.getWall(),state.getMonsters(),*dynamic_cast<state::MainCharacter*>(state.getChars()[0].get()),state.getExit());
 }
 
 const ai::PathMap &ai::HeuristicAI::getMonstersMap() const {
@@ -18,7 +18,7 @@ void ai::HeuristicAI::stateChanged(const state::Event &event) {
 }
 
 void ai::HeuristicAI::run(engine::Engine &engine, state::MainCharacter &character) {
-    this->monstersMap.init(engine.getState().getWall(),engine.getState().getMonsters(),character);
+    this->monstersMap.init(engine.getState().getWall(),engine.getState().getMonsters(),character,engine.getState().getExit());
     std::uniform_int_distribution<int> commandes(0,1);
     std::uniform_int_distribution<int> directions(0,3);
     auto queue = this->monstersMap.getQueue();

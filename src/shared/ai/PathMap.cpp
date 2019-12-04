@@ -15,7 +15,7 @@ const int *const ai::PathMap::getWeights() {
     return nullptr;
 }
 
-void ai::PathMap::init(const state::ElementTab &grid, std::vector<std::shared_ptr<state::MobileElement>> chars, state::MainCharacter& mc) {
+void ai::PathMap::init(const state::ElementTab &grid, std::vector<std::shared_ptr<state::MobileElement>> chars, state::MainCharacter& mc, const state::Coords& exit) {
     this->weights.push_back(0);
     this->weights.push_back(1);
     this->weights.push_back(2);
@@ -36,6 +36,11 @@ void ai::PathMap::init(const state::ElementTab &grid, std::vector<std::shared_pt
 
 
     state::Coords *tmp_coord = new state::Coords(mc_coords.getX(),mc_coords.getY());
+
+    if(m_coords.getY() == 0 && m_coords.getX() == 0){
+        m_coords.setX(exit.getX());
+        m_coords.setY(exit.getY());
+    }
 
     if(m_coords.getY() < mc_coords.getY()){
         if(grid.get(mc_coords.getX(),mc_coords.getY()-1) == NULL) {

@@ -8,7 +8,7 @@
 
 ai::AdvancedAI::AdvancedAI(const state::State &state, int randomSeed) : AI(state) {
     this->randgen.seed(randomSeed);
-    this->monstersMap.init(state.getWall(),state.getMonsters(),*dynamic_cast<state::MainCharacter*>(state.getChars()[0].get()));
+    this->monstersMap.init(state.getWall(),state.getMonsters(),*dynamic_cast<state::MainCharacter*>(state.getChars()[0].get()), state.getExit());
 }
 
 const ai::PathMap &ai::AdvancedAI::getMonstersMap() const {
@@ -26,7 +26,7 @@ void ai::AdvancedAI::run(engine::Engine &engine, state::MainCharacter &character
 
         updateCount++;
     }else{
-        this->monstersMap.init(engine.getState().getWall(),engine.getState().getMonsters(),character);
+        this->monstersMap.init(engine.getState().getWall(),engine.getState().getMonsters(),character,engine.getState().getExit());
         std::uniform_int_distribution<int> commandes(0,1);
         std::uniform_int_distribution<int> directions(0,3);
         auto queue = this->monstersMap.getQueue();
@@ -57,5 +57,10 @@ int ai::AdvancedAI::getMaxUpdates() const {
 
 void ai::AdvancedAI::setMaxUpdates(int maxUpdates) {
     this->maxUpdates = maxUpdates;
+}
+
+int ai::AdvancedAI::minmax(engine::Engine &engine, int depth, state::MainCharacter &character) {
+
+    return 0;
 }
 

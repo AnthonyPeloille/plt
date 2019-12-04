@@ -95,6 +95,9 @@ void state::State::initFloor(std::string map, int width, int height) {
                 if(type[id_type] == "Space"){
                     Space e{(SpaceTypeId)ids[ide]};
                     this->floor.set(i,j,&e);
+                    if(ide == 23){
+                        this->exit = Coords(i,j);
+                    }
                 }else if(type[id_type] == "Wall"){
                     Wall e{(WallTypeId)ids[ide]};
                     this->floor.set(i,j,&e);
@@ -169,6 +172,9 @@ void state::State::initWall(std::string map, int width, int height) {
                 if(type[id_type] == "Space"){
                     Space e{(SpaceTypeId)ids[ide]};
                     this->wall.set(i,j,&e);
+                    if(ide == 23){
+                        this->exit = Coords(i,j);
+                    }
                 }else if(type[id_type] == "Wall"){
                     Wall e{(WallTypeId)ids[ide]};
                     this->wall.set(i,j,&e);
@@ -247,4 +253,8 @@ const std::vector<std::shared_ptr<state::MobileElement>> &state::State::getMonst
 
 std::vector<std::shared_ptr<state::MobileElement>> &state::State::getMonsters() {
     return this->monsters;
+}
+
+const state::Coords &state::State::getExit() const {
+    return this->exit;
 }
