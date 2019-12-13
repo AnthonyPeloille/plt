@@ -285,6 +285,10 @@ Comme son nom l'indique, cette première intelligence artificielle est très bas
 
 Cette intelligence artificielle est déjà plus développée que la précédente puisque cette fois-ci, les commandes possibles pour le personnage seront affectées d'un poids. Ce poids permettra d'effectuer des mouvements qui l'aideront à remplir son objectif : combattre et tuer un monstre disposé sur la map.
 
+\subsubsection{Intelligence artificielle avancée}
+
+L'IA avancée a pour but d'utiliser des algorithmes de résolution de problèmes à états finis vus en cours d'algorithmique. Nous choisissons donc d'utiliser un algorithme minmax pour obtenir une intelligence artificielle plus complexe, ceppendant, celle-ci s'avère aussi beaucoup plus gourmande en terme de calculs, c'est pourquoi, en cas de quantité  trop importante, on bascule sur l'IA heuristique afin de tout de me voir notre personnage bouger et réaliser son objectif.
+
 \clearpage
 \subsection{Conception logiciel}
 
@@ -296,6 +300,12 @@ La classe AI est la classe mère de toutes les différentes intelligences artifi
 \bigbreak
 -HeuristicAI : L'IA heuristique repose sur l'attribution de poids aux positions auxquelles le personnage peut accéder (les cases adjacentes), on définit donc l'attribut weight dans une classe Point qui importe les coordonnées (notée coord). 
 La classe PathMap permet ensuite d'attribuer des poids aux points en fonction de la distance qui sépare le point de l'objectif du personnage (les monstres), plus la distance est petite, plus le poids est élevé.
+\bigbreak
+-AdvancedAI : Les algorithmes de notre IA avancée se divisent en 2 parties, la première partie consiste simplement à reprendre les algorithmes de l'IA heuristique pour s'assurer d'obtenir un comportement logique de notre IA même dans le cas où le minmax requiert trop de ressources/calculs. Pour savoir quand basculer d'une IA à l'autre, on utilise 2 variables définies dans la classe AdvancedAI que sont maxDepth, (pour la profondeur de l'arbre de recherche) et maxUpdates (pour le nombre d'étapes de recherche dans l'arbre).
+
+Deuxièmement, une méthode minmax qui reprend l'algorithme vu en cours pour calculer les actions optimales à réaliser pour notre personnage en utilisant un système de score, nous nous sommes particulièrement inspirés d'un exemple sur un jeu de morpion.Cette méthode est récursive et va étudier toutes les cases autour de notre personnage.
+
+Finalement, nous n'avons pas réussi à implémenter un minmax qui fonctionne, nous pensons que le problème est dû au trop grand nombre d'appels récursifs de la fonction minmax et au trop grand nombre de vérifications à effectuer aux alentours de notre personnage.
 
 \begin{landscape}
 \begin{figure}[p]
