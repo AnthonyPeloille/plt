@@ -251,7 +251,8 @@ int main(int argc,char* argv[])
 {
     //testSFML();
     //testAI();
-    testHeuristicAI();
+    //testHeuristicAI();
+    testAdvancedAI();
     //Exemple exemple;
     //exemple.setX(53);
     //state::Door door {};

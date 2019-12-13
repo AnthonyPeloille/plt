@@ -3,6 +3,7 @@
 #include <engine/AttackCommand.h>
 #include <engine/Engine.h>
 #include <engine/MoveCommand.h>
+#include <engine/PatternMonsterCommand.h>
 #include "AdvancedAI.h"
 #include "HeuristicAI.h"
 
@@ -20,7 +21,7 @@ void ai::AdvancedAI::stateChanged(const state::Event &event) {
 }
 
 void ai::AdvancedAI::run(engine::Engine &engine, state::MainCharacter &character) {
-    int depth = 0;
+    int depth = 100;
     int updateCount = 0;
     if(depth<this->maxDepth & updateCount<this->maxUpdates){
 
@@ -31,6 +32,11 @@ void ai::AdvancedAI::run(engine::Engine &engine, state::MainCharacter &character
         std::uniform_int_distribution<int> directions(0,3);
         auto queue = this->monstersMap.getQueue();
         int commande = commandes(this->randgen);
+        if(engine.getState().getMonsters().size() > 0){
+            auto *pattern = new engine::PatternMonsterCommand(
+                    *dynamic_cast<state::Monster *>(engine.getState().getMonsters()[0].get()));
+            engine.addCommand(2, pattern);
+        }
         if(commande == 0){
             Point point = queue.top();
             auto* move = new engine::MoveCommand(
