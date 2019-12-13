@@ -24,7 +24,7 @@ void ai::AdvancedAI::run(engine::Engine &engine, state::MainCharacter &character
     int depth = 100;
     int updateCount = 0;
     if(depth<this->maxDepth & updateCount<this->maxUpdates){
-
+        minmax(engine,depth,true);
         updateCount++;
     }else{
         this->monstersMap.init(engine.getState().getWall(),engine.getState().getMonsters(),character,engine.getState().getExit());
@@ -65,8 +65,34 @@ void ai::AdvancedAI::setMaxUpdates(int maxUpdates) {
     this->maxUpdates = maxUpdates;
 }
 
-int ai::AdvancedAI::minmax(engine::Engine &engine, int depth, state::MainCharacter &character) {
-
+int ai::AdvancedAI::minmax(engine::Engine &engine, int depth, bool isMaximizing) {
+    if (isMaximizing){
+        int bestScore = -INFINITY;
+        for(size_t i = 0; i < engine.getState().getWall().getHeight(); i++){
+            for(size_t j = 0; j < engine.getState().getWall().getWidth(); j++) {
+                if (engine.getState().getWall().get(i,j) == nullptr) {
+                    int score = minmax(engine, depth + 1, false);
+                    if (score  > bestScore){
+                        bestScore = score;
+                    }
+                }
+            }
+        }
+        return bestScore;
+    }else{
+        int bestScore = INFINITY;
+        for(size_t i = 0; i < engine.getState().getWall().getHeight(); i++){
+            for(size_t j = 0; j < engine.getState().getWall().getWidth(); j++) {
+                if (engine.getState().getWall().get(i,j) == nullptr) {
+                    int score = minmax(engine, depth + 1, false);
+                    if (score < bestScore){
+                        bestScore = score;
+                    }
+                }
+            }
+        }
+        return bestScore;
+    }
     return 0;
 }
 
