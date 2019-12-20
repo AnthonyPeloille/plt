@@ -9,9 +9,13 @@ void engine::Observable::registerObserver(Observer *o) const {
 }
 
 void engine::Observable::notifyUpdating() const {
-
+    for(auto observer : observers){
+        observer->engineUpdating();
+    }
 }
 
 void engine::Observable::notifyUpdated() const {
-
+    for(auto observer : observers){
+        observer->engineUpdated();
+    }
 }

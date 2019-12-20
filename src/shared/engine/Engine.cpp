@@ -1,5 +1,6 @@
 
 #include "Engine.h"
+#include "../../../extern/jsoncpp-1.8.0/jsoncpp.cpp"
 
 engine::Engine::Engine() {
     this->currentState = state::State();
@@ -22,6 +23,7 @@ void engine::Engine::addPassiveCommands() {
 }
 
 void engine::Engine::addCommand(int priority, Command *cmd) {
+    //Json::Value newCmd = cmd->serialize();
     currentCommands[priority] = std::move(std::unique_ptr<Command>(cmd));
 }
 
