@@ -12,3 +12,7 @@ engine::CommandTypeId engine::LoadCommand::getTypeId() const {
 void engine::LoadCommand::execute(state::State &state) {
 
 }
+
+void engine::LoadCommand::serialize(Json::Value& out) const {
+
+}

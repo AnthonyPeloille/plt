@@ -30,3 +30,7 @@ void engine::AttackCommand::execute(state::State &state) {
     state.notifyObserver(event);
 }
 
+void engine::AttackCommand::serialize(Json::Value& out) const {
+
+}
+

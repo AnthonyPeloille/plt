@@ -28,3 +28,7 @@ void engine::PathCommand::execute(state::State &state) {
     }
     state.notifyObserver(event);
 }
+
+void engine::PathCommand::serialize(Json::Value& out) const {
+
+}

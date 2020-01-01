@@ -35,3 +35,7 @@ void engine::PatternMonsterCommand::execute(state::State &state) {
     this->compteur++;
     state.notifyObserver(event);
 }
+
+void engine::PatternMonsterCommand::serialize(Json::Value& out) const {
+
+}

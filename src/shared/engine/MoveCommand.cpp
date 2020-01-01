@@ -66,3 +66,7 @@ void engine::MoveCommand::execute(state::State &state) {
         state.notifyObserver(event);
     }
 }
+
+void engine::MoveCommand::serialize(Json::Value& out) const {
+
+}
