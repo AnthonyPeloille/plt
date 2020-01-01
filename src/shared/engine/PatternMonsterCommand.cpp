@@ -37,5 +37,8 @@ void engine::PatternMonsterCommand::execute(state::State &state) {
 }
 
 void engine::PatternMonsterCommand::serialize(Json::Value &out) const{
-
+    Json::Value newCmd;
+    newCmd["CommandTypeId"] = PATTERN_MONSTER;
+    newCmd["PositionX"] = this->pos.getX();
+    newCmd["PositionY"] = this->pos.getY();
 }

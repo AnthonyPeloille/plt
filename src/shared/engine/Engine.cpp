@@ -4,6 +4,8 @@
 
 engine::Engine::Engine() {
     this->currentState = state::State();
+    record["tailleReelle"] = 0;
+    record["tabCmd"][0] = "";
 }
 
 engine::Engine::~Engine() = default;
@@ -24,6 +26,12 @@ void engine::Engine::addPassiveCommands() {
 
 void engine::Engine::addCommand(int priority, Command *cmd) {
     //Json::Value newCmd = cmd->serialize();
+    if(enableRecord){
+        Json::Value newCmd;
+        cmd->serialize(newCmd);
+        record["tabCmd"][record["tailleReelle"].asUInt()] = newCmd;
+        record["tailleReelle"] = record["tailleReelle"].asUInt() + 1;
+    }
     currentCommands[priority] = std::move(std::unique_ptr<Command>(cmd));
 }
 

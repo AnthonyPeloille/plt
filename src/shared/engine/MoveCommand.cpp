@@ -68,5 +68,9 @@ void engine::MoveCommand::execute(state::State &state) {
 }
 
 void engine::MoveCommand::serialize(Json::Value& out) const {
-
+    Json::Value newCmd;
+    newCmd["CommandTypeId"] = MOVE_CHAR;
+    newCmd["TypeId"] = this->character->getTypeId();
+    newCmd["PositionX"] = this->pos->getX();
+    newCmd["PositionY"] = this->pos->getY();
 }
