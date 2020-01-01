@@ -24,10 +24,9 @@ void thread_engine(void* ptr){
 }
 
 client::Client::Client() {
-    //character_ai = new ai::HeuristicAI(engine.getState(), time(0));
     engine.init("../res/map.txt","../res/wall.txt");
     engine.registerObserver(this);
-
+    character_ai = std::unique_ptr<ai::HeuristicAI>(new ai::HeuristicAI(engine.getState(), time(0)));
 }
 
 void client::Client::engineUpdating() {

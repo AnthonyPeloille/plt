@@ -5,6 +5,7 @@
 #include "render.h"
 #include "engine.h"
 #include "ai.h"
+#include "client.h"
 
 void testSFML() {
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML window");
@@ -240,6 +241,11 @@ void testAdvancedAI() {
     }
 }
 
+void testMultiThread() {
+    auto* jeu = new client::Client();
+    jeu->run();
+}
+
 // Fin test SFML
 
 #include <state.h>
@@ -252,7 +258,8 @@ int main(int argc,char* argv[])
     //testSFML();
     //testAI();
     //testHeuristicAI();
-    testAdvancedAI();
+    //testAdvancedAI();
+    testMultiThread();
     //Exemple exemple;
     //exemple.setX(53);
     //state::Door door {};
