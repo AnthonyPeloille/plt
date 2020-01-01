@@ -82,7 +82,8 @@ set(MACHINE_ENSEA OFF CACHE BOOL
   "Set MACHINE_ENSEA to ON to build on the CentOS machine at ENSEA")
 
 # Find library jsoncpp
-set(jsoncpp_include_dir "${PROJECT_SOURCE_DIR}/extern/jsoncpp-1.8.0")
+include_directories(${PROJECT_SOURCE_DIR}/extern/jsoncpp-1.8.0)
+#set(jsoncpp_include_dir "${PROJECT_SOURCE_DIR}/extern/jsoncpp-1.8.0")
 file(GLOB_RECURSE jsoncpp_sources extern/jsoncpp-1.8.0/*.cpp)
 
 # Find library SFML

@@ -23,7 +23,7 @@ void ai::AdvancedAI::stateChanged(const state::Event &event) {
 void ai::AdvancedAI::run(engine::Engine &engine, state::MainCharacter &character) {
     int depth = 100;
     int updateCount = 0;
-    if(depth<this->maxDepth & updateCount<this->maxUpdates){
+    if((depth < this->maxDepth) & (updateCount < this->maxUpdates)){
         minmax(engine,depth,true);
         updateCount++;
     }else{
