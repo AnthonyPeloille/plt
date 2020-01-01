@@ -315,22 +315,30 @@ Finalement, nous n'avons pas réussi à implémenter un minmax qui fonctionne, n
 \end{landscape}
 
 
-%\section{Modularisation}
-%\label{sec:module}
-%
-%\subsection{Organisation des modules}
-%
-%\clearpage
-%\subsection{Conception logiciel}
+\section{Modularisation}
+\label{sec:module}
 
+\subsection{Organisation des modules}
 
-%
-%\begin{landscape}
-%\begin{figure}[p]
-%\includegraphics[width=0.9\paperheight]{module.pdf}
-%\caption{\label{uml:module}Diagramme des classes pour la modularisation.} 
-%\end{figure}
-%\end{landscape}
+On cherche à modulariser les tâches en créant un nouveau thread dans la partie client qui va s'occuper de gérer le moteur de notre jeu.
+D'autre part, on va utiliser la librairie Json pour sérialiser toutes nos commandes afin d'avoir la possibilité de les exporter facilement.
+
+\subsection{Conception logiciel}
+
+Pour la modularisation, le travail se passe dans la classe client, dans celle-ci, on crée un nouveau thread qui appelle une fonction thread engine, cette fonction va simplement effectuer le travail du moteur, c'est-à-dire appeler la fonction update qui se charge de remettre à jour les éléments du jeu. On a d'ailleurs à présent un deuxième système d'oserveur en plus de celui que nous utilisions pour le rendu, ce deuxième observeur relie l'engine au client pour s'assurer que toutes les commandes soient bien par notre moteur dans son thread dédié.
+
+Toujours dans le fichier client.cpp, on écrit aussi tout le contenu qui se trouvait dans le main.cpp auparavant et qui sert à actualiser le rendu en continu.
+
+\bigbreak
+Concernant l'utilisation de Json pour nos commandes, on ajoute une méthode serialize pour chacun des types de commande qu'on peut trouver dans l'engine. Dans ces fonctions serialize, on récupère les données les plus importantes pour décrire et identifier la commande en question.
+On a aussi une variable notée "record" directement dans l'engine qui garde une trace de toutes les commandes qui ont été effectués afin de pouvoir, par exemple, répéter une même séquence de jeu.
+
+\begin{landscape}
+\begin{figure}[p]
+\includegraphics[width=0.9\paperheight]{client.pdf}
+\caption{\label{uml:module}Diagramme des classes pour la modularisation.} 
+\end{figure}
+\end{landscape}
  \addcontentsline{toc}{section}{Sources}
 \section*{Sources}
 

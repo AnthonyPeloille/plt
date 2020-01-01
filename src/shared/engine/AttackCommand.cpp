@@ -36,5 +36,6 @@ void engine::AttackCommand::serialize(Json::Value& out) const {
     newCmd["TypeId"] = this->character->getTypeId();
     newCmd["PositionX"] = this->pos->getX();
     newCmd["PositionY"] = this->pos->getY();
+    out = newCmd;
 }
 
