@@ -46,35 +46,50 @@ void client::Client::run() {
     sf::Sprite sprite;
     sprite.setTexture(texture);
     bool start = true;
+    bool menu = true;
     auto* scene = new render::Scene(engine.getState(),window);
     std::thread thread(thread_engine, &engine);
     while (window.isOpen())
     {
-        // Event processing
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            switch(event.type) {
-                case sf::Event::Closed:
-                    window.close();
-                    break;
-
-                default:
-                    break;
+        if(menu){
+            sf::Event event;
+            while (window.pollEvent(event))
+            {
+                if (event.type == sf::Event::Closed)
+                    return;
+                if (event.type == sf::Event::KeyPressed)
+                    menu = false;
             }
+            window.clear();
+            window.draw(sprite);
+            window.display();
+        }else {
+            // Event processing
+            sf::Event event;
+            while (window.pollEvent(event)) {
+                switch (event.type) {
+                    case sf::Event::Closed:
+                        window.close();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            character_ai->run(this->engine,
+                              *dynamic_cast<state::MainCharacter *>(engine.getState().getChars()[0].get()));
+            // Clear the whole window before rendering a new frame
+            window.clear();
+            // Draw some graphical entities
+            //window.draw(*surface);
+            if (start) {
+                scene->draw();
+                start = false;
+            }
+            // End the current frame and display its contents on screen
+            sf::sleep(sf::milliseconds(100));
+            engine.update();
         }
-        character_ai->run(this->engine, *dynamic_cast<state::MainCharacter*>(engine.getState().getChars()[0].get()));
-        // Clear the whole window before rendering a new frame
-        window.clear();
-        // Draw some graphical entities
-        //window.draw(*surface);
-        if(start){
-            scene->draw();
-            start = false;
-        }
-        // End the current frame and display its contents on screen
-        sf::sleep(sf::milliseconds(100));
-        engine.update();
     }
     v2=false;
     thread.join();

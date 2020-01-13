@@ -137,7 +137,6 @@ int answer_to_connection (void *cls, struct MHD_Connection *connection,
             int ret;
             ret = MHD_queue_response(connection, code, response);
             MHD_destroy_response(response);
-
             return ret;
         }
 
