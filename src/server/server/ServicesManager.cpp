@@ -37,12 +37,47 @@ server::HttpStatus server::ServicesManager::queryService(std::string &out, const
         Json::FastWriter fastWriter;
         out = fastWriter.write(vout);
         return code;
-   }else if(method == "PUSH"){
+   }else if(method == "POST"){
+        Json::Value vin;
+        Json::Reader reader;
+        std::istringstream ss2(in);
+        std::string token2;
 
+        std::vector<std::string> parsedContent;
+        while(std::getline(ss2, token2, '\n')) {
+            parsedContent.push_back(token2);
+        }
+        std::string json = parsedContent[3];
+        bool parsingSuccessful = reader.parse( json.c_str(), vin );     //parse process
+        if ( !parsingSuccessful )
+        {
+            return BAD_REQUEST;
+        }
+        HttpStatus code = findService(url)->post(vin,std::stoi(parsedUrl[2]));
+        return code;
    }else if(method == "PUT"){
+        Json::Value vout;
+        Json::Value vin;
+        Json::Reader reader;
+        std::istringstream ss2(in);
+        std::string token2;
 
-   }else if(method == "REMOVE"){
-
+        std::vector<std::string> parsedContent;
+        while(std::getline(ss2, token2, '\n')) {
+            parsedContent.push_back(token2);
+        }
+        std::string json = parsedContent[3];
+        bool parsingSuccessful = reader.parse( json.c_str(), vin );     //parse process
+        if ( !parsingSuccessful )
+        {
+           return BAD_REQUEST;
+        }
+        HttpStatus code = findService(url)->put(vout,vin);
+        Json::FastWriter fastWriter;
+        out = fastWriter.write(vout);
+        return code;
+   }else if(method == "DELETE"){
+        return findService(url)->remove(std::stoi(parsedUrl[2]));
    }else{
        return BAD_REQUEST;
    }

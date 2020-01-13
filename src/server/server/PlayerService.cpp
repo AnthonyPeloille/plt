@@ -15,7 +15,19 @@ server::HttpStatus server::PlayerService::get(Json::Value &out, int id) const {
 }
 
 server::HttpStatus server::PlayerService::post(const Json::Value &in, int id) {
-    return NOT_IMPLEMENTED;
+    std::vector<Player> players = game.getPlayers();
+    Player player;
+    bool isset = false;
+    if(id < players.size()){
+        isset = true;
+        players[id].name = in["name"].asString();
+        game.setPlayers(players);
+    }
+    if(isset){
+        return NO_CONTENT;
+    }else{
+        return NOT_FOUND;
+    }
 }
 
 server::HttpStatus server::PlayerService::put(Json::Value &out, const Json::Value &in) {
@@ -24,9 +36,22 @@ server::HttpStatus server::PlayerService::put(Json::Value &out, const Json::Valu
     player.name = in["name"].asString();
     players.push_back(player);
     game.setPlayers(players);
+    out["id"] = players.size()-1;
     return CREATED;
 }
 
 server::HttpStatus server::PlayerService::remove(int id) {
-    return NOT_IMPLEMENTED;
+    std::vector<Player> players = game.getPlayers();
+    Player player;
+    bool isset = false;
+    if(id < players.size()){
+        isset = true;
+        players.erase(players.begin() + id);
+        game.setPlayers(players);
+    }
+    if(isset){
+        return NO_CONTENT;
+    }else{
+        return NOT_FOUND;
+    }
 }
