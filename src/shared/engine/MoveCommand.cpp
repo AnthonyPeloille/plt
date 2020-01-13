@@ -63,6 +63,9 @@ void engine::MoveCommand::execute(state::State &state) {
                 }
             }
         }
+        if(this->pos->getX() == state.getExit().getX() && this->pos->getY() == state.getExit().getY()){
+            //victory
+        }
         state.notifyObserver(event);
     }
 }

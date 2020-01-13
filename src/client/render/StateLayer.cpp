@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include <state/State.h>
+#include <state/MainCharacter.h>
 #include "StateLayer.h"
 #include "CharsTileSet.h"
 
@@ -17,24 +18,54 @@ void render::StateLayer::initSurface() {
     //int type_id;
     std::stringstream id;
 
-    sf::Text title;
-    title.setFont(this->font);
-    title.setString("TEST");
-    title.setCharacterSize(16);
-    title.setFillColor(sf::Color::White);
+    sf::Text stat;
+    stat.setFont(this->font);
+    std::string str = "ATTAQUE : " + std::to_string(dynamic_cast<state::MainCharacter*>(this->state.getChars()[0].get())->getAttack()) + "   DEFENSE : " + std::to_string(dynamic_cast<state::MainCharacter*>(this->state.getChars()[0].get())->getDefense());
+    stat.setString(str);
+    stat.setCharacterSize(16);
+    stat.setFillColor(sf::Color::White);
 
     //sf::FloatRect textRect = title.getLocalBounds();
-    title.setOrigin(0,0);
-    title.setPosition(sf::Vector2f(160,16));
+    stat.setOrigin(0,0);
+    stat.setPosition(sf::Vector2f(120,16));
 
     sf::Sprite heart1;
     heart1.setTexture(this->surface->getTexture());
-    heart1.setTextureRect(sf::IntRect(288, 256, 16, 16));
+    auto mc = dynamic_cast<state::MainCharacter*>(this->state.getChars()[0].get());
+    if (mc->getHealthPoints() == 1){
+        heart1.setTextureRect(sf::IntRect(304, 256, 16, 16));
+    }else if(mc->getHealthPoints() == 0){
+        heart1.setTextureRect(sf::IntRect(320, 256, 16, 16));
+    }else {
+        heart1.setTextureRect(sf::IntRect(288, 256, 16, 16));
+    }
     heart1.setOrigin(0,0);
-    heart1.setPosition(sf::Vector2f(16.f,16.f));
+    heart1.setPosition(sf::Vector2f(16.f,18.f));
 
-    this->menu_top.push_back(std::make_shared<sf::Text>(title));
+    sf::Sprite heart2 = heart1;
+    if (mc->getHealthPoints() == 3){
+        heart2.setTextureRect(sf::IntRect(304, 256, 16, 16));
+    }else if(mc->getHealthPoints() == 2){
+        heart2.setTextureRect(sf::IntRect(320, 256, 16, 16));
+    }else {
+        heart2.setTextureRect(sf::IntRect(288, 256, 16, 16));
+    }
+    heart2.setPosition(sf::Vector2f(36.f,18.f));
+
+    sf::Sprite heart3 = heart1;
+    if (mc->getHealthPoints() == 5){
+        heart3.setTextureRect(sf::IntRect(304, 256, 16, 16));
+    }else if(mc->getHealthPoints() == 4){
+        heart3.setTextureRect(sf::IntRect(320, 256, 16, 16));
+    }else {
+        heart3.setTextureRect(sf::IntRect(288, 256, 16, 16));
+    }
+    heart3.setPosition(sf::Vector2f(56.f,18.f));
+
+    this->menu_top.push_back(std::make_shared<sf::Text>(stat));
     this->menu_top.push_back(std::make_shared<sf::Sprite>(heart1));
+    this->menu_top.push_back(std::make_shared<sf::Sprite>(heart2));
+    this->menu_top.push_back(std::make_shared<sf::Sprite>(heart3));
 
     sf::RectangleShape MoveBox(sf::Vector2f(140.f, 60.f));
     MoveBox.setFillColor(sf::Color(250,250,250));

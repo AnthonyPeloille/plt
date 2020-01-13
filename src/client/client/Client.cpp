@@ -45,6 +45,37 @@ void client::Client::run() {
     sf::RenderStates states;
     sf::Sprite sprite;
     sprite.setTexture(texture);
+    sf::Font font;
+    font.loadFromFile("../res/Font/ThickThinPixel.ttf");
+    std::vector<std::shared_ptr<sf::Drawable>> menu_choice;
+
+    sf::Text LocalText;
+    LocalText.setFont(font);
+    LocalText.setString("JEU LOCAL");
+    LocalText.setCharacterSize(23);
+    LocalText.setFillColor(sf::Color::Black);
+    LocalText.setPosition(sf::Vector2f(580.f,285.f));
+
+    sf::Text NetworkText;
+    NetworkText.setFont(font);
+    NetworkText.setString("JEU EN RESEAU");
+    NetworkText.setCharacterSize(23);
+    NetworkText.setFillColor(sf::Color::Black);
+    NetworkText.setPosition(sf::Vector2f(580.f,355.f));
+
+    sf::RectangleShape LocalBox(sf::Vector2f(340.f, 60.f));
+    LocalBox.setFillColor(sf::Color(250,250,250));
+    LocalBox.setPosition(sf::Vector2f(500.f,270.f));
+
+    sf::RectangleShape NetworkBox(sf::Vector2f(340.f, 60.f));
+    NetworkBox.setFillColor(sf::Color(250,250,250));
+    NetworkBox.setPosition(sf::Vector2f(500.f,340.f));
+
+    menu_choice.push_back(std::make_shared<sf::RectangleShape>(LocalBox));
+    menu_choice.push_back(std::make_shared<sf::RectangleShape>(NetworkBox));
+    menu_choice.push_back(std::make_shared<sf::Text>(LocalText));
+    menu_choice.push_back(std::make_shared<sf::Text>(NetworkText));
+
     bool start = true;
     bool menu = true;
     auto* scene = new render::Scene(engine.getState(),window);
@@ -56,12 +87,23 @@ void client::Client::run() {
             while (window.pollEvent(event))
             {
                 if (event.type == sf::Event::Closed)
-                    return;
+                    window.close();
                 if (event.type == sf::Event::KeyPressed)
                     menu = false;
+                if (event.type == sf::Event::MouseButtonPressed) {
+                    sf::Vector2i position = sf::Mouse::getPosition(window);
+                    if (LocalBox.getGlobalBounds().contains(window.mapPixelToCoords(position))) {
+                        menu = false;
+                    }
+                    if (NetworkBox.getGlobalBounds().contains(window.mapPixelToCoords(position))) {
+                        //
+                    }
+                }
             }
             window.clear();
-            window.draw(sprite);
+            for(auto drawable : menu_choice){
+                window.draw(*drawable);
+            }
             window.display();
         }else {
             // Event processing
