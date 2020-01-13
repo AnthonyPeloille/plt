@@ -44,17 +44,20 @@ server::HttpStatus server::ServicesManager::queryService(std::string &out, const
         std::string token2;
 
         std::vector<std::string> parsedContent;
-        while(std::getline(ss2, token2, '\n')) {
+        while(std::getline(ss2, token2, '=')) {
             parsedContent.push_back(token2);
         }
-        std::string json = parsedContent[3];
+        std::string json = parsedContent[1];
         bool parsingSuccessful = reader.parse( json.c_str(), vin );     //parse process
         if ( !parsingSuccessful )
         {
             return BAD_REQUEST;
         }
-        HttpStatus code = findService(url)->post(vin,std::stoi(parsedUrl[2]));
-        return code;
+        if(parsedUrl.size() > 2){
+            return findService(url)->post(vin,std::stoi(parsedUrl[2]));
+        }else{
+            return BAD_REQUEST;
+        }
    }else if(method == "PUT"){
         Json::Value vout;
         Json::Value vin;
@@ -63,10 +66,10 @@ server::HttpStatus server::ServicesManager::queryService(std::string &out, const
         std::string token2;
 
         std::vector<std::string> parsedContent;
-        while(std::getline(ss2, token2, '\n')) {
+        while(std::getline(ss2, token2, '=')) {
             parsedContent.push_back(token2);
         }
-        std::string json = parsedContent[3];
+        std::string json = parsedContent[1];
         bool parsingSuccessful = reader.parse( json.c_str(), vin );     //parse process
         if ( !parsingSuccessful )
         {
