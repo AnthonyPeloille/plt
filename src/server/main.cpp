@@ -4,6 +4,7 @@
 #include "server/ServicesManager.h"
 #include "server/PlayerService.h"
 #include "server/GameService.h"
+#include "server/CommandsService.h"
 
 #define PORT 8888
 #define GET 0
@@ -151,6 +152,7 @@ int main(int argc,char* argv[])
 
     manager->registerService(unique_ptr<PlayerService>(new PlayerService(game)));
     manager->registerService(unique_ptr<GameService>(new GameService(game)));
+    manager->registerService(unique_ptr<CommandsService>(new CommandsService(game)));
 
     struct MHD_Daemon *daemon;
 

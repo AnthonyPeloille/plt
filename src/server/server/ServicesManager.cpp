@@ -19,6 +19,8 @@ server::AbstractService *server::ServicesManager::findService(const std::string 
         return this->services[0].get();
     }else if(parsedUrl[1] == "game"){
         return this->services[1].get();
+    }else if(parsedUrl[1] == "commands"){
+        return this->services[2].get();
     }else{
         return nullptr;
     }
