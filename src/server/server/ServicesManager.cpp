@@ -17,6 +17,8 @@ server::AbstractService *server::ServicesManager::findService(const std::string 
 
     if(parsedUrl[1] == "player"){
         return this->services[0].get();
+    }else if(parsedUrl[1] == "game"){
+        return this->services[1].get();
     }else{
         return nullptr;
     }
@@ -33,7 +35,12 @@ server::HttpStatus server::ServicesManager::queryService(std::string &out, const
 
     if(method == "GET"){
         Json::Value vout;
-        HttpStatus code = findService(url)->get(vout,std::stoi(parsedUrl[2]));
+        HttpStatus code;
+        if(parsedUrl.size()>2){
+            code = findService(url)->get(vout,std::stoi(parsedUrl[2]));
+        }else{
+            code = findService(url)->get(vout,NULL);
+        }
         Json::FastWriter fastWriter;
         out = fastWriter.write(vout);
         return code;

@@ -6,5 +6,12 @@ server::GameService::GameService(Game &game) : AbstractService("game"), game(gam
 }
 
 server::HttpStatus server::GameService::get(Json::Value &out, int id) const {
-    return AbstractService::get(out, id);
+    if(game.getPlayers().size() != 0){
+        for ( int index = 0; index < game.getPlayers().size(); ++index ){
+            out["players"][index] = game.getPlayers()[index].name;
+        }
+        return OK;
+    }else{
+        return NOT_FOUND;
+    }
 }

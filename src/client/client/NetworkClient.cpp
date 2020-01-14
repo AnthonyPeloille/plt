@@ -1,5 +1,6 @@
 
 #include <SFML/Network.hpp>
+#include <json/json.h>
 #include "NetworkClient.h"
 
 client::NetworkClient::NetworkClient(std::string &url, int port) {
@@ -21,5 +22,15 @@ std::string client::NetworkClient::getGameStatus() {
 
     sf::Http::Response response = http.sendRequest(request);
 
-    return nullptr;
+    sf::Http::Request request2;
+    request2.setMethod(sf::Http::Request::Get);
+    request2.setUri("/game");
+    request2.setHttpVersion(1, 1); // HTTP 1.1
+    //request.setField("From", "me");
+    //request.setField("Content-Type", "application/x-www-form-urlencoded");
+    //request.setBody("json={\"name\":\"joueur1\"}");
+
+    sf::Http::Response response2 = http.sendRequest(request2);
+
+    return response2.getBody();
 }
