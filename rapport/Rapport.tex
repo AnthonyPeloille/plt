@@ -182,7 +182,7 @@ L'implémentation de cette méthode répond à un problème lié au format de no
 \begin{landscape}
 \begin{figure}[p]
 \includegraphics[width=0.9\paperheight]{state.pdf}
-\caption{\label{uml:state}Diagramme des classes d'état.} 
+\caption{\label{state}Diagramme des classes d'état.} 
 \end{figure}
 \end{landscape}
 
@@ -268,7 +268,7 @@ A noter que les events liés à des actions du joueur (appui sur le clavier, sou
 \begin{landscape}
 \begin{figure}[p]
 \includegraphics[width=0.9\paperheight]{engine.pdf}
-\caption{\label{uml:engine}Diagramme des classes de moteur de jeu.} 
+\caption{\label{engine}Diagramme des classes de moteur de jeu.} 
 \end{figure}
 \end{landscape}
 
@@ -310,7 +310,7 @@ Finalement, nous n'avons pas réussi à implémenter un minmax qui fonctionne, n
 \begin{landscape}
 \begin{figure}[p]
 \includegraphics[width=0.9\paperheight]{ai.pdf}
-\caption{\label{uml:ai}Diagramme des classes d'intelligence artificielle.} 
+\caption{\label{ai}Diagramme des classes d'intelligence artificielle.} 
 \end{figure}
 \end{landscape}
 
@@ -320,25 +320,53 @@ Finalement, nous n'avons pas réussi à implémenter un minmax qui fonctionne, n
 
 \subsection{Organisation des modules}
 
+\subsubsection{Répartition sur différents threads}
+
 On cherche à modulariser les tâches en créant un nouveau thread dans la partie client qui va s'occuper de gérer le moteur de notre jeu.
 D'autre part, on va utiliser la librairie Json pour sérialiser toutes nos commandes afin d'avoir la possibilité de les exporter facilement.
 
+\subsubsection{Répartition sur différentes machines : création d'un lobby}
+
+Afin de pouvoir jouer en réseau, la première étape consiste à créer une liste de clients/joueurs pour le serveur. Afin de ce faire, on va utiliser une API web avec plusieurs types de requêtes (basées sur le modèle REST) : GET qui récupère les informations d'un joueur, PUT qui ajoute un joueur, POST qui modifie les informations et DELETE qui supprime un joueur du lobby.
+%(captures comme dans le rapport pour get, put ...)
+
+\subsubsection{Répartition sur différentes machines : échange des commandes}
+
+Concernant la gestion des commandes, elles ne sont plus exécutées localement mais sur le serveur. Lorsqu'un joueur effectue une action,  la commande associée est sérialisée puis envoyée au serveur et c'est lui qui s'en occupe :  le moteur étant sur le serveur, la commande y est effectué et le joueur peut voir le nouvel état du jeu.
+%(captures comme dans le rapport pour putcommand)
+
+\clearpage
 \subsection{Conception logiciel}
 
 Pour la modularisation, le travail se passe dans la classe client, dans celle-ci, on crée un nouveau thread qui appelle une fonction thread engine, cette fonction va simplement effectuer le travail du moteur, c'est-à-dire appeler la fonction update qui se charge de remettre à jour les éléments du jeu. On a d'ailleurs à présent un deuxième système d'oserveur en plus de celui que nous utilisions pour le rendu, ce deuxième observeur relie l'engine au client pour s'assurer que toutes les commandes soient bien par notre moteur dans son thread dédié.
 
 Toujours dans le fichier client.cpp, on écrit aussi tout le contenu qui se trouvait dans le main.cpp auparavant et qui sert à actualiser le rendu en continu.
-
 \bigbreak
 Concernant l'utilisation de Json pour nos commandes, on ajoute une méthode serialize pour chacun des types de commande qu'on peut trouver dans l'engine. Dans ces fonctions serialize, on récupère les données les plus importantes pour décrire et identifier la commande en question.
 On a aussi une variable notée "record" directement dans l'engine qui garde une trace de toutes les commandes qui ont été effectués afin de pouvoir, par exemple, répéter une même séquence de jeu.
+\bigbreak
+Dans le client, la classe NetworkClient s'occupe de faire le lien entre le client et le serveur, le client peut, à tout moment, envoyer une commande pour qu'elle soit exécutée par le moteur du côté serveur ou recevoir des informations sur le statut du serveur/lobby (joueur(s) connecté(s)).
+\bigbreak
+La classe Game se trouve côté serveur et contient la liste des joueurs connectés ainsi que le moteur du jeu. Dans un premier temps, tout se déroule dans un seul thread, le but est ensuite d'utiliser du multi-threading pour le serveur comme on l'a fait localement auparavant : un thread dédié au fonctionnement et à la mise à jour du moteur et un second thread pour le reste.
+\bigbreak
+Enfin, on a différentes classes qui représentent des services disponibles sur le serveur, toutes ses classes héritent d'une classe mère notée AbstractService et sont gérés par la classe ServiceManager.
+Les 2 principaux services sont ceux qui permettent de gérer les joueurs connectés aux lobbys (PlayerService) et les commandes transmises par le client (CommandService).
+Les 2 autres servent à consulter l'état du jeu (GameService) et à renvoyer la version de l'API (VersionService) pour éviter tout problème de versions non compatibles.
 
 \begin{landscape}
 \begin{figure}[p]
 \includegraphics[width=0.9\paperheight]{client.pdf}
-\caption{\label{uml:module}Diagramme des classes pour la modularisation.} 
+\caption{\label{moduleC}Diagramme des classes pour la modularisation (côté client).} 
 \end{figure}
 \end{landscape}
+
+\begin{landscape}
+\begin{figure}[p]
+\includegraphics[width=0.9\paperheight]{server.pdf}
+\caption{\label{moduleS}Diagramme des classes pour la modularisation (côté serveur).} 
+\end{figure}
+\end{landscape}
+
  \addcontentsline{toc}{section}{Sources}
 \section*{Sources}
 

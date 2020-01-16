@@ -233,9 +233,12 @@ void client::Client::run() {
                     window.draw(VictoryText);
 
                     window.display();
+                    dynamic_cast<state::MainCharacter *>(engine.getState().getChars()[0].get())->setVictory(false);
                     sf::sleep(sf::milliseconds(5000));
-                    //engine.init("../res/map.txt","../res/wall.txt");
-                    bool menu = true;
+                    menu = true;
+                    lobby = false;
+                    engine.init("../res/map.txt","../res/wall.txt");
+
                 }
                 // Clear the whole window before rendering a new frame
                 window.clear();
