@@ -47,3 +47,11 @@ void state::MainCharacter::attacked(state::Monster &attacker) {
 
 }
 
+bool state::MainCharacter::getVictory() const {
+    return this->Victory;
+}
+
+void state::MainCharacter::setVictory(bool Victory) {
+    this->Victory = Victory;
+}
+

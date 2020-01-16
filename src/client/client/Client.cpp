@@ -9,6 +9,9 @@
 #include <state/MainCharacter.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Sleep.hpp>
+#include <engine/PathCommand.h>
+#include <engine/MoveCommand.h>
+#include <engine/AttackCommand.h>
 #include "NetworkClient.h"
 
 bool v1 = false;
@@ -56,6 +59,17 @@ void client::Client::run() {
     bool menu = true;
     bool lobby = false;
     auto* scene = new render::Scene(engine.getState(),window);
+
+    auto* pos = new state::Coords(10,20);
+    auto* move = new engine::MoveCommand(dynamic_cast<state::MainCharacter*>(engine.getState().getChars()[0].get()),pos);
+    engine.getState().getChars()[0]->setDirection(state::NORTH);
+    engine.addCommand(1,move);
+    auto* attack = new engine::AttackCommand(dynamic_cast<state::MainCharacter*>(engine.getState().getChars()[0].get()));
+    engine.addCommand(0,attack);
+    bool moving = false;
+    sf::Vector2i position = sf::Mouse::getPosition();
+    auto* path = new engine::PathCommand(new state::Coords());
+
     std::thread thread(thread_engine, &engine);
     while (window.isOpen())
     {
@@ -173,13 +187,55 @@ void client::Client::run() {
                         case sf::Event::Closed:
                             window.close();
                             break;
-
+                        case sf::Event::MouseButtonPressed:
+                            position = sf::Mouse::getPosition(window);
+                            if(scene->getMoveBounds().contains(window.mapPixelToCoords(position))){
+                                pos = new state::Coords(engine.getState().getChars()[0]->getPosition());
+                                path = new engine::PathCommand(pos);
+                                engine.addCommand(2, path);
+                                moving = true;
+                            }else if(scene->getAttackBounds().contains(window.mapPixelToCoords(position))) {
+                                attack = new engine::AttackCommand(dynamic_cast<state::MainCharacter*>(engine.getState().getChars()[0].get()));
+                                engine.addCommand(0,attack);
+                            }else {
+                                if(moving) {
+                                    //std::cout << window.getSize().x << '-' << scene->getWidth() << std::endl;
+                                    //std::cout << window.getSize().y << '-' << scene->getHeight() << std::endl;
+                                    //std::cout << position.x/16.f << std::endl;
+                                    //std::cout << (int) (position.y / (16*((float) window.getSize().y) / (float) scene->getHeight())) << std::endl;
+                                    pos->setX((int) (position.x*1.f/16.f));
+                                    pos->setY((int) (position.y*1.f/16.f));
+                                    move = new engine::MoveCommand(
+                                            dynamic_cast<state::MainCharacter *>(engine.getState().getChars()[0].get()), pos);
+                                    engine.getState().getChars()[0]->setDirection(state::NORTH);
+                                    engine.addCommand(1, move);
+                                    moving = false;
+                                }
+                            }
+                            break;
                             default:
                                 break;
                     }
-                }
+                }/*
                 character_ai->run(this->engine,
-                        *dynamic_cast<state::MainCharacter *>(engine.getState().getChars()[0].get()));
+                        *dynamic_cast<state::MainCharacter *>(engine.getState().getChars()[0].get()));*/
+                if(dynamic_cast<state::MainCharacter *>(engine.getState().getChars()[0].get())->getVictory()){
+
+                    window.clear();
+
+                    sf::Text VictoryText;
+                    VictoryText.setFont(font);
+                    VictoryText.setString("Victoire");
+                    VictoryText.setCharacterSize(40);
+                    VictoryText.setFillColor(sf::Color::White);
+                    VictoryText.setPosition(sf::Vector2f(580.f,250.f));
+                    window.draw(VictoryText);
+
+                    window.display();
+                    sf::sleep(sf::milliseconds(5000));
+                    //engine.init("../res/map.txt","../res/wall.txt");
+                    bool menu = true;
+                }
                 // Clear the whole window before rendering a new frame
                 window.clear();
                 // Draw some graphical entities

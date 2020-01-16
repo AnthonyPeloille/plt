@@ -33,8 +33,9 @@ void engine::MoveCommand::execute(state::State &state) {
             break;
     }
     this->character->setPosition(pos);*/
+    state::StateEvent event(state::MC_CHANGED);
     if(!this->character->getIsFighting()){
-        state::StateEvent event(state::MC_CHANGED);
+
         auto* old_pos = &this->character->getPosition();
         if(state.getWall().get(old_pos->getY()+1,old_pos->getX()) == NULL){
             dynamic_cast<state::Space *>(state.getFloor().get(old_pos->getY()+1,old_pos->getX()))->setColored(false);
@@ -63,11 +64,13 @@ void engine::MoveCommand::execute(state::State &state) {
                 }
             }
         }
-        if(this->pos->getX() == state.getExit().getX() && this->pos->getY() == state.getExit().getY()){
-            //victory
-        }
-        state.notifyObserver(event);
+
     }
+    if((std::abs(state.getExit().getY() - this->character->getPosition().getX()) +
+        std::abs(state.getExit().getX() - this->character->getPosition().getY())) <= 1){
+        this->character->setVictory(true);
+    }
+    state.notifyObserver(event);
 }
 
 void engine::MoveCommand::serialize(Json::Value& out) const {
