@@ -39,3 +39,7 @@ void engine::AttackCommand::serialize(Json::Value& out) const {
     out = newCmd;
 }
 
+void engine::AttackCommand::unserialize(Json::Value &in, state::State &state) {
+
+}
+

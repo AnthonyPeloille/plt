@@ -32,3 +32,7 @@ void engine::PathCommand::execute(state::State &state) {
 void engine::PathCommand::serialize(Json::Value& out) const {
 
 }
+
+void engine::PathCommand::unserialize(Json::Value &in, state::State &state) {
+
+}

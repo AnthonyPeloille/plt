@@ -44,3 +44,7 @@ void engine::PatternMonsterCommand::serialize(Json::Value &out) const{
     newCmd["PositionY"] = this->pos.getY();
     out = newCmd;
 }
+
+void engine::PatternMonsterCommand::unserialize(Json::Value &in, state::State &state) {
+
+}
