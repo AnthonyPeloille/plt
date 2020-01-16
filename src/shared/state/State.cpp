@@ -258,3 +258,7 @@ std::vector<std::shared_ptr<state::MobileElement>> &state::State::getMonsters() 
 const state::Coords &state::State::getExit() const {
     return this->exit;
 }
+
+std::vector<std::shared_ptr<state::MobileElement>> &state::State::getChars() {
+    return this->chars;
+}

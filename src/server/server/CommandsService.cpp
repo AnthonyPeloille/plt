@@ -11,11 +11,10 @@ server::HttpStatus server::CommandsService::get(Json::Value &out, int id) const 
 }
 
 server::HttpStatus server::CommandsService::put(Json::Value &out, const Json::Value &in) {
-    state::Coords pos = this->game.getEngine().getState().getChars()[0].get()->getPosition();
-    pos.setY(pos.getY()+1);
-    auto move = new engine::MoveCommand(
-            dynamic_cast<state::MainCharacter *>(this->game.getEngine().getState().getChars()[0].get()),&pos);
-    this->game.getEngine().addCommand(0,move);
+    if(in["CommandTypeId"].asInt() == engine::MOVE_CHAR) {
+        auto move = new engine::MoveCommand();
+        this->game.getEngine().addCommand(0, move);
+    }
     this->game.run();
     return CREATED;
 }

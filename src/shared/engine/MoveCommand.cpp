@@ -78,3 +78,12 @@ void engine::MoveCommand::serialize(Json::Value& out) const {
     newCmd["PositionY"] = this->pos->getY();
     out = newCmd;
 }
+
+void engine::MoveCommand::unserialize(Json::Value &in, state::State &state) {
+    this->character = dynamic_cast<state::MainCharacter *>(state.getChars()[0].get());
+    this->pos = new state::Coords(in["PositionX"].asInt(), in["PositionY"].asInt());
+}
+
+engine::MoveCommand::MoveCommand() {
+
+}
