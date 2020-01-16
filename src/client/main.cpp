@@ -259,10 +259,10 @@ int main(int argc,char* argv[])
     //testAI();
     //testHeuristicAI();
     //testAdvancedAI();
-    std::string url = "http://localhost";
-    auto* network = new client::NetworkClient(url,8888);
-    network->getGameStatus();
-    //testMultiThread();
+    //std::string url = "http://localhost";
+    //auto* network = new client::NetworkClient(url,8888);
+    //network->getGameStatus();
+    testMultiThread();
     //Exemple exemple;
     //exemple.setX(53);
     //state::Door door {};
