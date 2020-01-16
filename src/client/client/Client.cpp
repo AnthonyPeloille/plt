@@ -64,6 +64,7 @@ void client::Client::run() {
     auto* move = new engine::MoveCommand(dynamic_cast<state::MainCharacter*>(engine.getState().getChars()[0].get()),pos);
     engine.getState().getChars()[0]->setDirection(state::NORTH);
     engine.addCommand(1,move);
+    net.putCommand(std::unique_ptr<engine::MoveCommand>(new engine::MoveCommand(dynamic_cast<state::MainCharacter*>(engine.getState().getChars()[0].get()),pos)));
     auto* attack = new engine::AttackCommand(dynamic_cast<state::MainCharacter*>(engine.getState().getChars()[0].get()));
     engine.addCommand(0,attack);
     bool moving = false;
