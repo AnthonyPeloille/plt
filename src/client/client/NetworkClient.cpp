@@ -18,9 +18,10 @@ std::string client::NetworkClient::getGameStatus() {
     request.setHttpVersion(1, 1); // HTTP 1.1
     request.setField("From", "me");
     request.setField("Content-Type", "application/x-www-form-urlencoded");
-    request.setBody("json={\"name\":\"joueur1\"}");
+    request.setBody("{\"name\":\"joueur1\"}");
 
     sf::Http::Response response = http.sendRequest(request);
+
 
     sf::Http::Request request2;
     request2.setMethod(sf::Http::Request::Get);

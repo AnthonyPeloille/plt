@@ -327,13 +327,50 @@ D'autre part, on va utiliser la librairie Json pour sérialiser toutes nos comma
 
 \subsubsection{Répartition sur différentes machines : création d'un lobby}
 
-Afin de pouvoir jouer en réseau, la première étape consiste à créer une liste de clients/joueurs pour le serveur. Afin de ce faire, on va utiliser une API web avec plusieurs types de requêtes (basées sur le modèle REST) : GET qui récupère les informations d'un joueur, PUT qui ajoute un joueur, POST qui modifie les informations et DELETE qui supprime un joueur du lobby.
+Afin de pouvoir jouer en réseau, la première étape consiste à créer une liste de clients/joueurs pour le serveur. Afin de ce faire, on va utiliser une API web avec plusieurs types de requêtes (basées sur le modèle REST) :\\ %GET qui récupère les informations d'un joueur, PUT qui ajoute un joueur, POST qui modifie les informations et DELETE qui supprime un joueur du lobby.
 %(captures comme dans le rapport pour get, put ...)
+Liste des requêtes possibles :\\\\
+\textbf{\\GET /player/<id>}\\
+\begin{itemize}
+\item Si le joueur <id> existe : Statut OK et retourne \{"name":"player\_name"\}
+\item Si le joueur <id> n'existe pas : Statut NOT\_FOUND
+\end{itemize}
+
+\textbf{\\PUT /player}\\
+Données en entrée :  \{"name":"player\_name"\}\\
+\begin{itemize}
+\item S'il reste une place libre : Statut CREATED et retourne \{"id":"player\_id"\}
+\item Sinon Statut OUT\_OF\_RESSOURCES
+\end{itemize}
+
+\textbf{\\POST /player/<id>}\\
+Données en entrée :  \{"name":"player\_name"\}\\
+\begin{itemize}
+\item Si le joueur <id> existe : Statut NO\_CONTENT
+\item Si le joueur <id> n'existe pas : Statut NOT\_FOUND
+\end{itemize}
+
+\textbf{\\DELETE /player/<id>}\\
+\begin{itemize}
+\item Si le joueur <id> existe : Statut NO\_CONTENT et joueur retiré
+\item Si le joueur <id> n'existe pas : Statut NOT\_FOUND
+\end{itemize}
+
+\textbf{\\GET /game}\\
+\begin{itemize}
+\item S'il y a des joueurs dans le lobby : Statut OK et retourne un tableau json contenant les noms des joueurs
+\item S'il n'y a pas de joueurs dans le lobby : Statut OK et retourne null
+\end{itemize}
 
 \subsubsection{Répartition sur différentes machines : échange des commandes}
 
 Concernant la gestion des commandes, elles ne sont plus exécutées localement mais sur le serveur. Lorsqu'un joueur effectue une action,  la commande associée est sérialisée puis envoyée au serveur et c'est lui qui s'en occupe :  le moteur étant sur le serveur, la commande y est effectué et le joueur peut voir le nouvel état du jeu.
 %(captures comme dans le rapport pour putcommand)
+On rajoute la requête suivante à l'API afin d'envoyer les commandes au serveur :\\\\
+\textbf{PUT /commands}\\
+Données en entrée :  La commande serialisée.\\\\
+Renvoie dans tous les cas le Statut CREATED.
+
 
 \clearpage
 \subsection{Conception logiciel}

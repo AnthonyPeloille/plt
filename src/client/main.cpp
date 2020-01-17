@@ -179,6 +179,25 @@ void testHeuristicAI() {
                     break;
             }
         }
+        if(dynamic_cast<state::MainCharacter *>(engine->getState().getChars()[0].get())->getVictory()){
+
+            window.clear();
+            sf::Font font;
+            font.loadFromFile("../res/Font/ThickThinPixel.ttf");
+            sf::Text VictoryText;
+            VictoryText.setFont(font);
+            VictoryText.setString("Victoire");
+            VictoryText.setCharacterSize(40);
+            VictoryText.setFillColor(sf::Color::White);
+            VictoryText.setPosition(sf::Vector2f(580.f,250.f));
+            window.draw(VictoryText);
+
+            window.display();
+            dynamic_cast<state::MainCharacter *>(engine->getState().getChars()[0].get())->setVictory(false);
+            sf::sleep(sf::milliseconds(5000));
+            exit(0);
+            engine->init("../res/map.txt","../res/wall.txt");
+        }
         r_ai->run(*engine, *dynamic_cast<state::MainCharacter*>(engine->getState().getChars()[0].get()));
         // Clear the whole window before rendering a new frame
         window.clear();
@@ -262,7 +281,7 @@ int main(int argc,char* argv[])
     //std::string url = "http://localhost";
     //auto* network = new client::NetworkClient(url,8888);
     //network->getGameStatus();
-    testMultiThread();
+    //testMultiThread();
     //Exemple exemple;
     //exemple.setX(53);
     //state::Door door {};
@@ -271,7 +290,13 @@ int main(int argc,char* argv[])
     if(argc > 1){
         if(argv[1] == std::string("hello")){	
             cout << "Bonjour le monde !" << endl;
+        }else if(argv[1] == std::string("random")){
+            testAI();
+        }else if(argv[1] == std::string("heuristic")){
+            testHeuristicAI();
         }
+    }else{
+        testMultiThread();
     }
 
     return 0;
